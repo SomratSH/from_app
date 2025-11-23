@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:from_app/presentation/home/from_page_step_two.dart';
 
 class InformationFormScreen extends StatefulWidget {
   const InformationFormScreen({Key? key}) : super(key: key);
@@ -82,13 +83,13 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                _buildStepIndicator(1, true),
-                Expanded(child: _buildStepLine(true)),
-                _buildStepIndicator(2, false),
-                Expanded(child: _buildStepLine(false)),
-                _buildStepIndicator(3, false),
-                Expanded(child: _buildStepLine(false)),
-                _buildStepIndicator(4, false),
+                _buildStepIndicator(1, true, false),
+                Expanded(child: _buildStepLine(true, false)),
+                _buildStepIndicator(2, false, false),
+                Expanded(child: _buildStepLine(false, false)),
+                _buildStepIndicator(3, false, false),
+                Expanded(child: _buildStepLine(false, false)),
+                _buildStepIndicator(4, false, false),
               ],
             ),
           ),
@@ -402,155 +403,156 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                     ),
 
                     const SizedBox(height: 24),
-                    _buildSectionTitle('শিক্ষাগত তথ্য'),
-                    const SizedBox(height: 16),
-
-                    const Text(
-                      'এস.এস.সি/সমমান পরীক্ষা',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField('রোল', _sscRollController),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'রেজিস্ট্রেশন',
-                            _sscRegController,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'পাসের সন',
-                            _sscYearController,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField('বোর্ড', _sscBoardController),
-                        ),
-                      ],
-                    ),
-                    _buildTextField('জিপিএ', _sscGpaController),
+                    _buildSectionTitle('দুর্ঘটনার ধরন'),
 
                     const SizedBox(height: 16),
-                    const Text(
-                      'এইচ.এস.সি/সমমান পরীক্ষা',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField('রোল', _hscRollController),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'রেজিস্ট্রেশন',
-                            _hscRegController,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'পাসের সন',
-                            _hscYearController,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField('বোর্ড', _hscBoardController),
-                        ),
-                      ],
-                    ),
-                    _buildTextField('জিপিএ', _hscGpaController),
-
-                    const SizedBox(height: 24),
-                    _buildSectionTitle('অভিভাবকের তথ্য'),
-                    const SizedBox(height: 16),
-                    _buildTextField('অভিভাবকের নাম', TextEditingController()),
-                    _buildTextField('সম্পর্ক', TextEditingController()),
-                    _buildTextField('মোবাইল নম্বর', TextEditingController()),
+                    _buildCheckboxGroup([
+                      'মৃত্যু',
+                      'স্থায়ী পূর্ণ দৈহিক অক্ষমতা',
+                      'স্থায়ী আংশিক দৈহিক অক্ষমতা',
+                      "জখমের ফলে ১৬ ঘন্টার অতিরিক্ত এবং ২০ দিন পর্যন্ত কাজে অনুপস্থিতির কারণ ঘটলে",
+                    ]),
+                    SizedBox(height: 10),
+                    Text("যদি মৃত্যু হয় তাহলে মৃত্যুর তারিখ ও সময় উল্লেখ করুন"),
+                    SizedBox(height: 15),
                     _buildTextField(
-                      'জাতীয় পরিচয়পত্র নম্বর',
+                      'দুর্ঘটনার তারিখ ও সময়:',
                       TextEditingController(),
+                      suffixIcon: Icons.calendar_today,
                     ),
+                    _buildSectionTitle('দুর্ঘটনার ফলে অক্ষমতা'),
 
-                    const SizedBox(height: 24),
-                    _buildSectionTitle('জরুরি যোগাযোগ'),
                     const SizedBox(height: 16),
-                    _buildTextField('নাম', TextEditingController()),
-                    _buildTextField('সম্পর্ক', TextEditingController()),
-                    _buildTextField('মোবাইল নম্বর', TextEditingController()),
+                    _buildCheckboxGroup([
+                      'কোন ব্যাক্তি পতিত হওয়া',
+                      'কোন বস্তু পতিত হওয়া',
+                      'পতিত বস্তু ব্যতীত কোন বস্তু দ্বারা বস্তু কর্তৃক আঘাত।',
+                      "বিদ্যুৎ",
+                      "বিষ, ক্ষয়কারী বস্তু বা ক্ষতিকর বস্তু, বিকিরণসহ",
+                      "বিস্ফোরণ",
+                      "আগুন",
+                      "সবেগে পানি প্রবেশ",
+                      "গ্যাসে শ্বাসরোধ",
+                      "অতিরিক্ত বল প্রয়োগ",
+                      "অতিরিক্ত চলাফেরা",
+                      "সড়ক দুর্ঘটনা (সমুদ্র/নদী সহ)",
+                      "ভূমিধস",
+                      "উচ্চতা থেকে পড়ে",
+                      "বয়লার বা পানির পাইপ বা সিলিন্ডার বিস্ফোরণ",
+                      "প্রাকৃতিক দূর্যোগ",
+                      "জলদস্যু/দুর্বৃত্তদের দ্বারা আক্রান্ত (শুধু মৎস্য চাসের জন্য)",
+                      "বজ্রপাত",
+                    ]),
+                    Text("অন্যান্য এখানে লিখুন:"),
                     _buildTextField(
-                      'ঠিকানা',
+                      'অন্যান্য উপাদান',
                       TextEditingController(),
-                      maxLines: 3,
+                      maxLines: 2,
+                    ),
+                    _buildSectionTitle('দুর্ঘটনার সহায়ক বস্তু'),
+
+                    const SizedBox(height: 16),
+                    Text(
+                      "দুর্ঘটনার সহায়ক বস্তুর শ্রেণিবিভাগ (যেটি প্রযোজ্য সেখানে টিক চিহ্ন দিন):",
+                    ),
+                    const SizedBox(height: 10),
+                    _buildCheckboxGroup([
+                      'প্রধান চালক যন্ত্র',
+                      'সঞ্চালক যন্ত্রপাতি',
+                      'উত্তোলক যন্ত্রপাতি',
+                      "কার্যরত যন্ত্রপাতি",
+                      "অন্য যন্ত্রপাতি বা সংস্থাপনসমূহ",
+                      "রেল বা ট্রলি পরিবহন",
+                      "পণ্য পরিবহন বা মাল পরিবহন",
+                      "হাতে ব্যবহারিত যন্ত্রপাতি",
+                    ]),
+                    SizedBox(height: 10),
+                    Text("দাহ্য পদার্থ অন্যান্য এখানে লিখুন:"),
+                    SizedBox(height: 10),
+                    _buildTextField(
+                      'অন্যান্য উপাদান',
+                      TextEditingController(),
+                      maxLines: 2,
                     ),
 
-                    const SizedBox(height: 32),
+                    _buildSectionTitle('সহয়তাকারীর তথ্য'),
+                    SizedBox(height: 15),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        OutlinedButton(
-                          onPressed: () {
-                            // Cancel action
-                          },
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32,
-                              vertical: 16,
+                        Expanded(
+                          child: _buildTextField(
+                            'তথ্য সহায়তাকারির নাম',
+                            TextEditingController(),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _buildTextField(
+                            'ফোন নং',
+                            TextEditingController(),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        // Reset Button
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            onPressed: () {},
+                            icon: Icon(Icons.refresh, size: 18),
+                            label: Text(
+                              'রিসেট করুন',
+                              style: TextStyle(fontSize: 16),
                             ),
-                            side: const BorderSide(color: Colors.grey),
-                          ),
-                          child: const Text(
-                            'বাতিল করুন',
-                            style: TextStyle(color: Colors.black87),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey[600],
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 12,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
                           ),
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              // Save and proceed to next step
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('তথ্য সংরক্ষণ করা হচ্ছে...'),
+
+                        SizedBox(width: 10),
+
+                        // Next Step Button
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => FormPageStepTwo(),
                                 ),
                               );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF1976D2),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32,
-                              vertical: 16,
+                            },
+                            icon: Icon(Icons.arrow_right_alt, size: 22),
+                            label: Text(
+                              'পরবর্তী ধাপ',
+                              style: TextStyle(fontSize: 16),
                             ),
-                          ),
-                          child: const Text(
-                            'সংরক্ষণ করুন',
-                            style: TextStyle(color: Colors.white),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 12,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 32),
                   ],
                 ),
               ),
@@ -561,39 +563,50 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
     );
   }
 
-  Widget _buildStepIndicator(int step, bool isActive) {
+  Widget _buildStepIndicator(int step, bool isActive, bool isDone) {
     return Container(
       width: 32,
       height: 32,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isActive ? const Color(0xFF1976D2) : Colors.grey[300],
+        color: isActive
+            ? const Color(0xFF1976D2)
+            : isDone
+            ? Colors.green
+            : Colors.grey[300],
         border: Border.all(
           color: isActive ? const Color(0xFF1976D2) : Colors.grey[400]!,
           width: 2,
         ),
       ),
       child: Center(
-        child: Text(
-          step.toString(),
-          style: TextStyle(
-            color: isActive ? Colors.white : Colors.grey[600],
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        child: isDone
+            ? Icon(Icons.check, color: Colors.white)
+            : Text(
+                step.toString(),
+                style: TextStyle(
+                  color: isActive ? Colors.white : Colors.grey[600],
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
       ),
     );
   }
 
-  Widget _buildStepLine(bool isActive) {
+  Widget _buildStepLine(bool isActive, bool isDone) {
     return Container(
       height: 2,
-      color: isActive ? const Color(0xFF1976D2) : Colors.grey[300],
+      color: isActive
+          ? const Color(0xFF1976D2)
+          : isDone
+          ? Colors.green
+          : Colors.grey[300],
     );
   }
 
   Widget _buildSectionTitle(String title) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       decoration: BoxDecoration(
         color: Colors.blue[50],
