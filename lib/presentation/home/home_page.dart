@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:from_app/common/custom_logout_dialog.dart';
 import 'package:from_app/presentation/home/form_page.dart';
+import 'package:from_app/provider/auth_provider.dart';
+import 'package:from_app/provider/home_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  final int submittedCount = 12;
-  final int pendingCount = 5;
-  final int approvedCount = 8;
-
   @override
   Widget build(BuildContext context) {
+    final homeProvider = context.watch<HomeProvider>();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Home', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF1976FF),
-        automaticallyImplyLeading: false, // removes default back button
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              showLogoutDialog(context);
+            },
+            icon: Icon(Icons.logout, color: Colors.white),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,14 +32,28 @@ class HomePage extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             // Dashboard cards
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildCountCard('Submitted', submittedCount, Colors.orange),
-                _buildCountCard('Pending', pendingCount, Colors.redAccent),
-                _buildCountCard('Approved', approvedCount, Colors.green),
-              ],
-            ),
+            homeProvider.isLoading
+                ? CircularProgressIndicator()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildCountCard(
+                        'Total',
+                        homeProvider.total,
+                        Colors.orange,
+                      ),
+                      _buildCountCard(
+                        'Pending',
+                        homeProvider.pending,
+                        Colors.redAccent,
+                      ),
+                      _buildCountCard(
+                        'Approved',
+                        homeProvider.approved,
+                        Colors.green,
+                      ),
+                    ],
+                  ),
             const SizedBox(height: 40),
             // Buttons
             ElevatedButton.icon(

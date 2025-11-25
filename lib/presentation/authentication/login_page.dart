@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:from_app/presentation/home/home_page.dart';
+import 'package:from_app/common/custom_laoding_dialog.dart';
+import 'package:from_app/presentation/home/submit_page.dart';
+import 'package:provider/provider.dart';
+import '../../provider/auth_provider.dart';
+import '../home/home_page.dart';
+import 'signup_page.dart'; // make sure you import your signup page
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
+    final provider = context.watch<AuthProvider>();
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.lock, size: 80, color: Color(0xFF1976FF)),
+            const SizedBox(height: 60),
+
+            Image.asset("assets/images/app_iocn.jpeg", height: 120),
+
             const SizedBox(height: 20),
+
             const Text(
               'Login',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1976FF),
+                color: Colors.black,
               ),
             ),
+
             const SizedBox(height: 40),
+
+            // EMAIL TEXT FIELD
             TextField(
-              controller: emailController,
+              controller: provider.email, // from provider
               decoration: InputDecoration(
                 labelText: 'Email',
                 prefixIcon: const Icon(Icons.email),
@@ -42,9 +48,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+
             const SizedBox(height: 20),
+
+            // PASSWORD TEXT FIELD
             TextField(
-              controller: passwordController,
+              controller: provider.password, // from provider
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
@@ -54,7 +63,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+
             const SizedBox(height: 30),
+
+            // LOGIN BUTTON
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -65,19 +77,61 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: () {
-                  // Handle login
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => HomePage()),
-                  );
+                onPressed: () async {
+                  LoadingDialog.show(context);
+                  final response = await provider.login();
+                  LoadingDialog.hide(context);
+                  if (response) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HomePage()),
+                    );
+                  } else {
+                    CustomSnackbar.show(
+                      context,
+                      message: "Login Failed or email or password incorrect",
+                    );
+                  }
                 },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
+                child: provider.isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text(
+                        'Login',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
               ),
             ),
+
+            const SizedBox(height: 20),
+
+            // SIGNUP LINK
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Don't have an account? ",
+                  style: TextStyle(fontSize: 14, color: Colors.black54),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) =>  SignupScreen()),
+                    );
+                  },
+                  child: const Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF1976FF),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
           ],
         ),
       ),
