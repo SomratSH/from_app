@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:from_app/presentation/home/home_page.dart';
+import 'package:from_app/provider/information_provider.dart';
+import 'package:provider/provider.dart';
 
 class SubmitPage extends StatelessWidget {
   const SubmitPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<InformationProvider>();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -61,25 +64,37 @@ class SubmitPage extends StatelessWidget {
                 ),
               ),
             ),
-            _buildInfoRow('তথ্য সংগ্রহকারীর নাম', '-'),
+            _buildInfoRow(
+              'তথ্য সংগ্রহকারীর নাম',
+              provider.informationGiveHelperController.text,
+            ),
             const Divider(height: 1),
-            _buildInfoRow('দুষ্টিনা কবলিত ব্যক্তির নাম', 'Xantha Bryan'),
+            _buildInfoRow(
+              'দুর্ঘটনা কবলিত ব্যাক্তির নাম',
+              provider.nameController.text,
+            ),
             const Divider(height: 1),
-            _buildInfoRow('জন্ম তারিখ', '16-Sep-2022'),
+            _buildInfoRow('জন্ম তারিখ', provider.birthDateController.text),
             const Divider(height: 1),
-            _buildInfoRow('জাতীয় পরিচয় পত্র নম্বর', 'Sit labore recusanda'),
+            _buildInfoRow(
+              'জাতীয় পরিচয় পত্র নম্বর',
+              provider.nidController.text,
+            ),
             const Divider(height: 1),
-            _buildInfoRow('পিতার নাম', 'Lani Harrison'),
+            _buildInfoRow('পিতার নাম', provider.fatherNameController.text),
             const Divider(height: 1),
-            _buildInfoRow('মাতার নাম', 'Gillian Long'),
+            _buildInfoRow('মাতার নাম', provider.motherNameController.text),
             const Divider(height: 1),
-            _buildInfoRow('স্বামী/স্ত্রীর নাম', 'Orli Garcia'),
+            _buildInfoRow(
+              'স্বামী/স্ত্রীর নাম',
+              provider.spouseNameController.text,
+            ),
             const Divider(height: 1),
-            _buildInfoRow('বয়স', 'Eos veniam laborum বছর'),
+            _buildInfoRow('বয়স', provider.ageController.text),
             const Divider(height: 1),
-            _buildInfoRow('লিঙ্গ', 'অন্যান্য'),
+            _buildInfoRow('লিঙ্গ', provider.gender!),
             const Divider(height: 1),
-            _buildInfoRow('বৈবাহিক অবস্থা', 'বিবাহিত'),
+            _buildInfoRow('বৈবাহিক অবস্থা', provider.maritalStatus!),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -106,11 +121,20 @@ class SubmitPage extends StatelessWidget {
                 ),
               ),
             ),
-            _buildInfoRow('বর্তমান ঠিকানা', 'Eius ullam consequat'),
+            _buildInfoRow(
+              'বর্তমান ঠিকানা',
+              provider.currentAddressController.text,
+            ),
             const Divider(height: 1),
-            _buildInfoRow('স্থায়ী ঠিকানা', 'Quam fugit qui offi'),
+            _buildInfoRow(
+              'স্থায়ী ঠিকানা',
+              provider.permanentAddressController.text,
+            ),
             const Divider(height: 1),
-            _buildInfoRow('মোবাইল/পরিবারের যোগাযোগ', 'Obcaecati assumenda'),
+            _buildInfoRow(
+              'মোবাইল/পরিবারের যোগাযোগ',
+              provider.phoneController.text,
+            ),
             const Divider(height: 1),
 
             Padding(
@@ -141,26 +165,38 @@ class SubmitPage extends StatelessWidget {
             ),
             _buildInfoRow(
               'কারখানা/প্রতিষ্ঠানের নাম ও ঠিকানা',
-              'Alec Henderson',
+              provider.officeNameController.text,
             ),
             const Divider(height: 1),
-            _buildInfoRow('রেজিস্ট্রেশন নম্বর', 'Perspiciatis earum'),
+            _buildInfoRow(
+              'রেজিস্ট্রেশন নম্বর',
+              provider.officeRegistrationController.text,
+            ),
             const Divider(height: 1),
             _buildInfoRow(
               'টেলিফোন, মোবাইল, ফ্যাক্স ও ইমেইল',
-              'Voluptatem et Nam d',
+              provider.officeTelephoneController.text,
             ),
             const Divider(height: 1),
-            _buildInfoRow('ম্যানেজারের ফোন নম্বর', 'Sunt rem voluptatem'),
+            _buildInfoRow(
+              'ম্যানেজারের ফোন নম্বর',
+              provider.officeMdNameController.text,
+            ),
             const Divider(height: 1),
             _buildInfoRow(
               'উৎপাদিত দ্রব্য/সেবার প্রকৃতি ও ধরন',
-              'Lani Harrison',
+              provider.produceProductNameController.text,
             ),
             const Divider(height: 1),
-            _buildInfoRow('স্থান/শাখা/বিভাগ', 'Gillian Long'),
+            _buildInfoRow(
+              'স্থান/শাখা/বিভাগ',
+              provider.accidentPlaceController.text,
+            ),
             const Divider(height: 1),
-            _buildInfoRow('মজুরি', 'Orli Garcia'),
+            _buildInfoRow(
+              'মজুরি',
+              provider.accidentPersonSalaryController.text,
+            ),
             const Divider(height: 1),
 
             Padding(
@@ -189,19 +225,22 @@ class SubmitPage extends StatelessWidget {
                 ),
               ),
             ),
-            _buildInfoRow('কর্মস্থলের নাম', 'Alec Henderson'),
+            _buildInfoRow('কর্মস্থলের নাম', provider.workplaceName!),
             const Divider(height: 1),
-            _buildInfoRow('দুর্ঘটনার ধরন', 'Perspiciatis earum'),
+            _buildInfoRow('দুর্ঘটনার ধরন', provider.accidentSystem!),
             const Divider(height: 1),
-            _buildInfoRow('দুর্ঘটনার অংশ', 'Voluptatem et Nam d'),
+            _buildInfoRow(
+              'দুর্ঘটনার অংশ',
+              provider.afterAccidentFeactureController.text,
+            ),
             const Divider(height: 1),
-            _buildInfoRow('আঘাতপ্রাপ্ত অংশ', 'Sunt rem voluptatem'),
+            _buildInfoRow('আঘাতপ্রাপ্ত অংশ', provider.bodyPartFeacture ?? provider.otherBoydpartFecatureController.text),
             const Divider(height: 1),
-            _buildInfoRow('সহায়তাকারী অংশ', 'Lani Harrison'),
+            _buildInfoRow('সহায়তাকারী অংশ', provider.accidentHelper!),
             const Divider(height: 1),
-            _buildInfoRow('দুর্ঘটনার তারিখ ও সময়', '2002-04-15T21:52'),
+            _buildInfoRow('দুর্ঘটনার তারিখ ও সময়', provider.accidentDate!),
             const Divider(height: 1),
-            _buildInfoRow('মৃত্যুর তারিখ ও সময়', '2018-06-15T02:22'),
+            _buildInfoRow('মৃত্যুর তারিখ ও সময়', provider.ifDeath!),
             const Divider(height: 1),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -229,9 +268,15 @@ class SubmitPage extends StatelessWidget {
                 ),
               ),
             ),
-            _buildInfoRow('তথ্য সহায়তাকারীর নাম', 'Shaeleigh Mccall'),
+            _buildInfoRow(
+              'তথ্য সহায়তাকারীর নাম',
+              provider.informationGiveHelperController.text,
+            ),
             const Divider(height: 1),
-            _buildInfoRow('ফোন নম্বর	', '+1 (981) 812-3027'),
+            _buildInfoRow(
+              'ফোন নম্বর	',
+              provider.informationHelperPhoneController.text,
+            ),
             const Divider(height: 1),
 
             Padding(

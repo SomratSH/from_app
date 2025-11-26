@@ -1,32 +1,74 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:from_app/presentation/home/review_page.dart';
+import 'package:from_app/provider/information_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'review_page.dart';
 
-class FormPageStepTwo extends StatefulWidget {
-  @override
-  State<FormPageStepTwo> createState() => _FormPageStepTwoState();
-}
+class FormPageStepTwo extends StatelessWidget {
+  const FormPageStepTwo({super.key});
 
-class _FormPageStepTwoState extends State<FormPageStepTwo> {
-  List<File> uploadedFiles = [];
-
-  Future<void> pickFiles() async {
-    final result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'png', 'jpeg', 'pdf'],
+  Future<void> pickFileOptions(BuildContext context) async {
+    final provider = context.read<InformationProvider>();
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Gallery'),
+                onTap: () async {
+                  Navigator.pop(ctx);
+                  final picker = ImagePicker();
+                  final picked = await picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
+                  if (picked != null) provider.addFiles([File(picked.path)]);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Camera'),
+                onTap: () async {
+                  Navigator.pop(ctx);
+                  final picker = ImagePicker();
+                  final picked = await picker.pickImage(
+                    source: ImageSource.camera,
+                  );
+                  if (picked != null) provider.addFiles([File(picked.path)]);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.attach_file),
+                title: const Text('Files'),
+                onTap: () async {
+                  Navigator.pop(ctx);
+                  final result = await FilePicker.platform.pickFiles(
+                    allowMultiple: true,
+                    type: FileType.custom,
+                    allowedExtensions: ['jpg', 'png', 'jpeg', 'pdf'],
+                  );
+                  if (result != null) {
+                    provider.addFiles(
+                      result.paths.map((p) => File(p!)).toList(),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
-
-    if (result != null) {
-      setState(() {
-        uploadedFiles.addAll(result.paths.map((p) => File(p!)).toList());
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<InformationProvider>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -35,13 +77,14 @@ class _FormPageStepTwoState extends State<FormPageStepTwo> {
           'তথ্য সংগ্রহকারী ফর্ম',
           style: TextStyle(color: Colors.white),
         ),
-        leading: Icon(Icons.menu, color: Colors.white),
+        leading: const Icon(Icons.menu, color: Colors.white),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Step indicator
             Container(
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -58,15 +101,16 @@ class _FormPageStepTwoState extends State<FormPageStepTwo> {
                 ],
               ),
             ),
-            // ------------ SECTION TITLE ----------------
+
+            // Section title
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.blue[50],
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: Text(
+              child: const Text(
                 "আপনার ডকুমেন্ট",
                 style: TextStyle(
                   fontSize: 18,
@@ -76,54 +120,73 @@ class _FormPageStepTwoState extends State<FormPageStepTwo> {
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            // ------------ Upload Button ----------------
+            // Upload Button
             Center(
               child: ElevatedButton.icon(
-                onPressed: pickFiles,
-                icon: Icon(Icons.upload_file, color: Colors.white),
-                label: Text(
+                onPressed: () => pickFileOptions(context),
+                icon: const Icon(Icons.upload_file, color: Colors.white),
+                label: const Text(
                   "Upload File",
                   style: TextStyle(color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
                 ),
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            // ------------ TABLE HEADER ----------------
+            // Table Header
             Container(
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black26),
               ),
               child: Row(
-                children: [
-                  Expanded(child: Text("SI", style: titleStyle)),
-                  Expanded(child: Text("ডকুমেন্ট টাইপ", style: titleStyle)),
-                  Expanded(child: Text("টাইপ", style: titleStyle)),
+                children: const [
+                  Expanded(
+                    child: Text(
+                      "SI",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "ডকুমেন্ট টাইপ",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "টাইপ",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(width: 40), // For delete icon
                 ],
               ),
             ),
 
-            // ------------ FILE LIST ----------------
+            // File List
             Expanded(
-              child: uploadedFiles.isEmpty
-                  ? Center(child: Text("কোন ফাইল আপলোড করা হয়নি"))
+              child: provider.uploadedFiles.isEmpty
+                  ? const Center(child: Text("কোন ফাইল আপলোড করা হয়নি"))
                   : ListView.builder(
-                      itemCount: uploadedFiles.length,
+                      itemCount: provider.uploadedFiles.length,
                       itemBuilder: (context, index) {
-                        File file = uploadedFiles[index];
+                        File file = provider.uploadedFiles[index];
                         String name = file.path.split('/').last;
                         String ext = name.split('.').last.toUpperCase();
 
                         return Container(
-                          padding: EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                             border: Border(
                               bottom: BorderSide(color: Colors.grey.shade300),
@@ -134,14 +197,12 @@ class _FormPageStepTwoState extends State<FormPageStepTwo> {
                               Expanded(child: Text("${index + 1}")),
                               Expanded(child: Text(name)),
                               Expanded(child: Text(ext)),
-
                               IconButton(
-                                icon: Icon(Icons.delete, color: Colors.red),
-                                onPressed: () {
-                                  setState(() {
-                                    uploadedFiles.removeAt(index);
-                                  });
-                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () => provider.removeFile(index),
                               ),
                             ],
                           ),
@@ -150,40 +211,38 @@ class _FormPageStepTwoState extends State<FormPageStepTwo> {
                     ),
             ),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-            // ------------ NAVIGATION BUTTONS ----------------
+            // Navigation Buttons
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () => Navigator.pop(context),
-                    icon: Icon(Icons.arrow_back),
-                    label: Text("পূর্ববর্তী ধাপ"),
+                    icon: const Icon(Icons.arrow_back),
+                    label: const Text("পূর্ববর্তী ধাপ"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[600],
                       foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
                   ),
                 ),
-
-                SizedBox(width: 10),
-
+                const SizedBox(width: 10),
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => ReviewPage()),
+                        MaterialPageRoute(builder: (_) => const ReviewPage()),
                       );
                     },
-                    icon: Icon(Icons.arrow_right_alt),
-                    label: Text("পরবর্তী ধাপ"),
+                    icon: const Icon(Icons.arrow_right_alt),
+                    label: const Text("পরবর্তী ধাপ"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
                   ),
                 ),
@@ -194,19 +253,9 @@ class _FormPageStepTwoState extends State<FormPageStepTwo> {
       ),
     );
   }
-
-  TextStyle get titleStyle =>
-      TextStyle(fontWeight: FontWeight.bold, fontSize: 14);
 }
 
-// Dummy Next Page
-class NextPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Next Step Page")));
-  }
-}
-
+// Step Indicator widgets
 Widget _buildStepIndicator(int step, bool isActive, bool isDone) {
   return Container(
     width: 32,
@@ -229,7 +278,7 @@ Widget _buildStepIndicator(int step, bool isActive, bool isDone) {
     ),
     child: Center(
       child: isDone
-          ? Icon(Icons.check, color: Colors.white)
+          ? const Icon(Icons.check, color: Colors.white)
           : Text(
               step.toString(),
               style: TextStyle(

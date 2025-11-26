@@ -108,6 +108,60 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> sendOtp(String phone) async {
+    try {
+      final url = Uri.parse(
+        "https://admin.bdsofttechnology.com/api/forgot-password",
+      );
+
+      final response = await http.post(
+        url,
+        headers: {"Accept": "application/json"},
+        body: {"phone": phone},
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200 &&
+          data["message"] == "OTP sent successfully ") {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Send OTP Error: $e");
+      return false;
+    }
+  }
+
+  Future<bool> resetPassword({
+    required String phone,
+    required String otp,
+    required String password,
+  }) async {
+    try {
+      final url = Uri.parse(
+        "https://admin.bdsofttechnology.com/api/reset-password",
+      );
+
+      final response = await http.post(
+        url,
+        headers: {"Accept": "application/json"},
+        body: {"phone": phone, "otp": otp, "password": password},
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200 && data["token"] != null) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print("Reset Password Error: $e");
+      return false;
+    }
+  }
+
   Future<bool> logout() async {
     try {
       isLoading = true;

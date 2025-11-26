@@ -1,71 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:from_app/presentation/home/from_page_step_two.dart';
+import 'package:from_app/provider/information_provider.dart';
+import 'package:provider/provider.dart';
 
-class InformationFormScreen extends StatefulWidget {
-  const InformationFormScreen({Key? key}) : super(key: key);
-
-  @override
-  State<InformationFormScreen> createState() => _InformationFormScreenState();
-}
-
-class _InformationFormScreenState extends State<InformationFormScreen> {
-  final _formKey = GlobalKey<FormState>();
-  int _currentStep = 0;
-
-  // Controllers for text fields
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _fatherNameController = TextEditingController();
-  final TextEditingController _motherNameController = TextEditingController();
-  final TextEditingController _spouseNameController = TextEditingController();
-  final TextEditingController _birthDateController = TextEditingController();
-  final TextEditingController _nidController = TextEditingController();
-  final TextEditingController _birthCertificateController =
-      TextEditingController();
-  final TextEditingController _passportController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-
-  // Address controllers
-  final TextEditingController _permanentVillageController =
-      TextEditingController();
-  final TextEditingController _permanentPostOfficeController =
-      TextEditingController();
-  final TextEditingController _permanentDistrictController =
-      TextEditingController();
-  final TextEditingController _permanentDivisionController =
-      TextEditingController();
-
-  final TextEditingController _presentVillageController =
-      TextEditingController();
-  final TextEditingController _presentPostOfficeController =
-      TextEditingController();
-  final TextEditingController _presentDistrictController =
-      TextEditingController();
-  final TextEditingController _presentDivisionController =
-      TextEditingController();
-
-  // Education controllers
-  final TextEditingController _sscRollController = TextEditingController();
-  final TextEditingController _sscRegController = TextEditingController();
-  final TextEditingController _sscYearController = TextEditingController();
-  final TextEditingController _sscBoardController = TextEditingController();
-  final TextEditingController _sscGpaController = TextEditingController();
-
-  final TextEditingController _hscRollController = TextEditingController();
-  final TextEditingController _hscRegController = TextEditingController();
-  final TextEditingController _hscYearController = TextEditingController();
-  final TextEditingController _hscBoardController = TextEditingController();
-  final TextEditingController _hscGpaController = TextEditingController();
-
-  // Dropdown values
-  String? _gender;
-  String? _religion;
-  String? _maritalStatus;
-  String? _bloodGroup;
-  String? _selectedDistrict;
+class InformationFormScreen extends StatelessWidget {
+  const InformationFormScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<InformationProvider>();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -97,121 +40,84 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Form(
-                key: _formKey,
+                key: provider.formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildSectionTitle('মৌলিক তথ্য'),
                     const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির নাম:',
-                            _nameController,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির জন্ম তারিখ:',
-                            _birthDateController,
-                          ),
-                        ),
-                      ],
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির নাম',
+                      provider.nameController,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির জাতিয় পরিচয় পত্র নম্বর:',
-                            _nidController,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির পিতার নাম:',
-                            _fatherNameController,
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির জন্ম তারিখ',
+                      provider.birthDateController,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির মাতার নাম:',
-                            _motherNameController,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির স্বামী বা স্ত্রীর নাম:',
-                            _spouseNameController,
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 5),
+
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির জাতিয় পরিচয় পত্র নম্বর',
+                      provider.nidController,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির বর্তমান ঠিকানা:',
-                            TextEditingController(),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির স্থায়ী ঠিকানা:',
-                            TextEditingController(),
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 5),
+
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির পিতার নাম',
+                      provider.fatherNameController,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির মোবাইল নম্বর বা তার স্বজনের যোগাযোগের নম্বর:',
-                            _phoneController,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির বয়স:',
-                            TextEditingController(),
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির মাতার নাম',
+                      provider.motherNameController,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ভিক্ষা কবলিত ব্যাক্তির পদবী:',
-                            TextEditingController(),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildDropdown(
-                            'লিঙ্গ:',
-                            _gender,
-                            ['নির্বাচন করুন', 'পুরুষ', 'মহিলা', 'অন্যান্য'],
-                            (value) {
-                              setState(() => _gender = value);
-                            },
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির স্বামী বা স্ত্রীর নাম',
+                      provider.spouseNameController,
                     ),
+                    SizedBox(height: 5),
+
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির বর্তমান ঠিকানা',
+                      provider.currentAddressController,
+                    ),
+                    SizedBox(height: 5),
+
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির স্থায়ী ঠিকানা',
+                      provider.permanentAddressController,
+                    ),
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির মোবাইল নম্বর বা তার স্বজনের যোগাযোগের নম্বর:',
+                      provider.phoneController,
+                    ),
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির বয়স',
+                      provider.ageController,
+                    ),
+                    SizedBox(height: 5),
+
+                    _buildTextField(
+                      'দুর্ভিক্ষা কবলিত ব্যাক্তির পদবী',
+                      provider.degesicnationController,
+                    ),
+                    SizedBox(height: 5),
+                    _buildDropdown(
+                      'লিঙ্গ:',
+                      provider.gender,
+                      ['নির্বাচন করুন', 'পুরুষ', 'মহিলা', 'অন্যান্য'],
+                      (value) {
+                        provider.updateGender(value!);
+                      },
+                    ),
+
                     _buildDropdown(
                       'বৈবাহিক অবস্থা',
-                      _maritalStatus,
+                      provider.maritalStatus,
                       [
                         'নির্বাচন করুন',
                         'অবিবাহিত',
@@ -220,7 +126,7 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                         'তালাকপ্রাপ্ত',
                       ],
                       (value) {
-                        setState(() => _maritalStatus = value);
+                        provider.updateMaritalStatus(value!);
                       },
                     ),
 
@@ -237,56 +143,43 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                     ),
                     const SizedBox(height: 12),
 
-                    _buildCheckboxGroup([
-                      'তৈরি পোশাক কারখানা',
-                      'চা শিল্প',
-                      'জুতার কারখানা',
-                      'নির্মান ও অবকাঠামো ভাঙ্গা।',
-                      'করলা খনি',
-                    ]),
+                    _buildCheckboxGroup(
+                      [
+                        'তৈরি পোশাক কারখানা',
+                        'চা শিল্প',
+                        'জুতার কারখানা',
+                        'নির্মান ও অবকাঠামো ভাঙ্গা।',
+                        'করলা খনি',
+                        "সরকারি পরিষেবা কর্মী",
+                        "চিনি কল",
+                        "চালের কল",
+                        "ভ্যালু চেইন",
+                        "জাহাজ ভাঙ্গা বা জাহাজ নির্মাণ",
+                        "পরিবহন",
+                        "স্টিল মিল ও রি-রোলিং",
+                        "গ্যাস ক্ষেত্র",
+                        "ফার্মাসিউটিক্যালস",
+                        "কাগজের কারখানা",
+                        "অটোমোবাইল",
+                        "ট্যানারি কারখানা বা চামড়া শিল্প"
+                            "মৎস্য",
+                        "খাদ্য ও পানিয়",
+                        "পাটকল",
+                        "সেবা খাত (স্বাস্থ্য পরিচর্যা, নার্স, ক্লিনার, সিকিউরিটি গার্ড, হোটেল বয়, ওয়াসা কর্মী, ডেসা কর্মী)",
+                        "রাসায়নিক শিল্প",
+                        "ইট তৈরির কারখানা",
+                        "ঝালাই কারখানা",
+                      ],
+                      (v) {
+                        provider.updateWorkPlaceName(v);
+                      },
+                    ),
 
                     const SizedBox(height: 8),
-                    _buildCheckboxGroup([
-                      'ভালু টেইন',
-                      'আহাজে অল্যা বা আহাজে নির্মাণ',
-                      'পরিবহন',
-                      'স্ট্রিল মিল ও রি-রোলিং',
-                      'গ্যাস ফেক্ত্র',
-                    ]),
 
-                    const SizedBox(height: 8),
-                    _buildCheckboxGroup([
-                      'চামারি কারখানা বা চামড়া শিল্প',
-                      'মৎস্য',
-                      'খাদ্য ও পানীয়',
-                      'পাটকল',
-                      'সেবা খাত (হাস্ত পরিচর্যা, নার্স, ক্লিনার, সিকিউরিটি সার্ভ, যোটেন বয়, ওয়াসা কর্মী, তেজা কর্মী)',
-                    ]),
-
-                    const SizedBox(height: 8),
-                    _buildCheckboxGroup([
-                      'সরকারি পরিষেবা কর্মী',
-                      'চিনি কল',
-                      'চালের কল',
-                      'হস্ত শিল্প অনান্যা ,এখানে লিখুন',
-                    ]),
-
-                    const SizedBox(height: 8),
-                    _buildCheckboxGroup([
-                      'ফার্মাসিউটিক্যালস',
-                      'কাগজের কারখানা',
-                      'অটোমোবাইল',
-                    ]),
-
-                    const SizedBox(height: 8),
-                    _buildCheckboxGroup([
-                      'রাসায়নিক শিল্প',
-                      'ইট তৈরির কারখানা',
-                      'ঝালাই কারখানা',
-                    ]),
                     _buildTextField(
                       'অন্যান্য উপাদান',
-                      TextEditingController(),
+                      provider.othersProductController,
                       maxLines: 2,
                     ),
 
@@ -300,153 +193,194 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                     ),
                     const SizedBox(height: 12),
 
-                    _buildCheckboxGroup([
-                      'পাথর কারখানা।',
-                      'জেলে',
-                      'কসাই',
-                      'ফসল উৎপাদন কর্মী।',
-                      'হস্ত শিল্প অথবা অনানুষ্ঠানিক পরিবহন কর্মী (রিকশা/মোকা/ভান) হলে এখানে লিখুন',
-                    ]),
+                    _buildCheckboxGroup(
+                      [
+                        'পাথর কারখানা।',
+                        'জেলে',
+                        'কসাই',
+                        'ফসল উৎপাদন কর্মী।',
+                        'হস্ত শিল্প অথবা অনানুষ্ঠানিক পরিবহন কর্মী (রিকশা/মোকা/ভান) হলে এখানে লিখুন',
+                        'তাঁত',
+                        'পুহস্তী',
+                        'দিনমজুর।',
+                        'আসবাবপত্র তৈরী কর্মী',
+                        'স্বর্ণকার।',
+                        'ফেরিওয়ালা',
+                        'নির্মাণ পুহস্তী সম্পর্কিত ব্যাক্তিত্ব।',
+                      ],
+                      (v) {
+                        provider.updateWorkshopName(v);
+                      },
+                    ),
 
-                    const SizedBox(height: 8),
-                    _buildCheckboxGroup([
-                      'তাঁত',
-                      'পুহস্তী',
-                      'দিনমজুর।',
-                      'আসবাবপত্র তৈরী কর্মী',
-                    ]),
-
-                    const SizedBox(height: 8),
-                    _buildCheckboxGroup([
-                      'স্বর্ণকার।',
-                      'ফেরিওয়ালা',
-                      'নির্মাণ পুহস্তী সম্পর্কিত ব্যাক্তিত্ব।',
-                    ]),
                     _buildTextField(
                       'অন্যান্য উপাদান',
-                      TextEditingController(),
+                      provider.othersProductController,
                       maxLines: 2,
                     ),
 
                     const SizedBox(height: 24),
                     _buildSectionTitle('প্রতিষ্ঠানের তথ্য'),
                     const SizedBox(height: 16),
+                    _buildTextField(
+                      'কারখানা/প্রতিষ্ঠানের নাম ও ঠিকানা',
+                      provider.officeNameController,
+                    ),
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'কারখানা/প্রতিষ্ঠানের রেজি. নং',
+                      provider.officeRegistrationController,
+                    ),
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'টেলিফোন, মোবাইল, ফ্যাক্স ও ইমেইল',
+                      provider.officeTelephoneController,
+                    ),
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'ব্যবস্থাপকের নাম ও ঠিকানা (ফোন নম্বরসহ)',
+                      provider.officeMdNameController,
+                    ),
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'প্রতিষ্ঠানের উৎপাদিত দ্রব্য/সেবার প্রকৃতি ও ধরন:',
+                      provider.produceProductNameController,
+                    ),
+                    SizedBox(height: 5),
 
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'কারখানা/প্রতিষ্ঠানের নাম ও ঠিকানা',
-                            TextEditingController(),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'কারখানা/প্রতিষ্ঠানের রেজি. নং:',
-                            TextEditingController(),
-                          ),
-                        ),
-                      ],
+                    _buildTextField(
+                      'দুর্ঘটনার তারিখ ও সময়:',
+                      TextEditingController(text: provider.accidentDate),
+                      suffixIcon: Icons.calendar_today,
+                      readonly: true,
+                      onTapSuffixIcon: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
+                        );
+                        if (pickedDate != null) {
+                          String formattedDate =
+                              "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+                          provider.updateAccidentData(
+                            formattedDate,
+                          ); // update provider
+                        }
+                      },
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'টেলিফোন, মোবাইল, ফ্যাক্স ও ইমেইল:',
-                            TextEditingController(),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'ব্যবস্থাপকের নাম ও ঠিকানা (ফোন নম্বরসহ):',
-                            TextEditingController(),
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 5),
+                    _buildTextField(
+                      'স্থান/শাখা/বিভাগ (যেখানে দুর্ঘটনা সংঘটিত হয়েছে)',
+                      provider.accidentPlaceController,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'প্রতিষ্ঠানের উৎপাদিত দ্রব্য/সেবার প্রকৃতি ও ধরন:',
-                            TextEditingController(),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ঘটনার তারিখ ও সময়:',
-                            TextEditingController(),
-                            suffixIcon: Icons.calendar_today,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'স্থান/শাখা/বিভাগ (যেখানে দুর্ঘটনা সংঘটিত হয়েছে):',
-                            TextEditingController(),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'দুর্ঘটনা কবলিত ব্যাক্তির মজুরি:',
-                            TextEditingController(),
-                          ),
-                        ),
-                      ],
+                    _buildTextField(
+                      'দুর্ঘটনা কবলিত ব্যাক্তির মজুরি',
+                      provider.accidentPersonSalaryController,
                     ),
 
                     const SizedBox(height: 24),
                     _buildSectionTitle('দুর্ঘটনার ধরন'),
 
                     const SizedBox(height: 16),
-                    _buildCheckboxGroup([
-                      'মৃত্যু',
-                      'স্থায়ী পূর্ণ দৈহিক অক্ষমতা',
-                      'স্থায়ী আংশিক দৈহিক অক্ষমতা',
-                      "জখমের ফলে ১৬ ঘন্টার অতিরিক্ত এবং ২০ দিন পর্যন্ত কাজে অনুপস্থিতির কারণ ঘটলে",
-                    ]),
+                    _buildCheckboxGroup(
+                      [
+                        'মৃত্যু',
+                        'স্থায়ী পূর্ণ দৈহিক অক্ষমতা',
+                        'স্থায়ী আংশিক দৈহিক অক্ষমতা',
+                        "জখমের ফলে ১৬ ঘন্টার অতিরিক্ত এবং ২০ দিন পর্যন্ত কাজে অনুপস্থিতির কারণ ঘটলে",
+                      ],
+                      (v) {
+                        provider.updateAccidentSystem(v);
+                      },
+                    ),
                     SizedBox(height: 10),
                     Text("যদি মৃত্যু হয় তাহলে মৃত্যুর তারিখ ও সময় উল্লেখ করুন"),
                     SizedBox(height: 15),
                     _buildTextField(
                       'দুর্ঘটনার তারিখ ও সময়:',
-                      TextEditingController(),
+                      TextEditingController(text: provider.ifDeath),
+                      readonly: true,
                       suffixIcon: Icons.calendar_today,
+                      onTapSuffixIcon: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
+                        );
+                        if (pickedDate != null) {
+                          String formattedDate =
+                              "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+                          provider.updateIfDeath(
+                            formattedDate,
+                          ); // update provider
+                        }
+                      },
                     ),
+                    const SizedBox(height: 16),
+                    _buildSectionTitle('অঙ্গহানির বিবরণ'),
+                    _buildCheckboxGroup(
+                      [
+                        'ডান বাহু কনুই-এ অথবা কনুই এর উপরে।',
+                        'পা-হাঁটুতে বা হাঁটুর উপরে।',
+                        'শ্রবণশক্তি স্থায়ী পূর্ণ',
+                        "এক পায়ের সব কয়টি আঙ্গুল",
+                        "পায়ের বুড়ো আঙ্গুল",
+                        "বাম বাহু কনুই-এ অথবা কনুই এর উপরে",
+                        "পা হাঁটুর নীচে",
+                        "এক চোখ",
+                        "বৃদ্ধাঙ্গুলির একটি হাঁড়",
+                        "ডান বাহু কনুই এর নিচে",
+                        "বাম বাহু কনুই এর নীচে",
+                        "বৃদ্ধাঙ্গুলি",
+                        "তর্জনী",
+                       
+                      ],
+                      (v) {
+                        provider.updateBodyPartFeacture(v);
+                      },
+                    ),
+                    Text("তর্জনী বাদে অন্য কোন আঙ্গুল অন্যান্য এখানে লিখুন:"),
+                    SizedBox(height: 15),
+                    _buildTextField(
+                      'অন্যান্য উপাদান',
+                      provider.otherBoydpartFecatureController,
+                      
+                    ),
+
                     _buildSectionTitle('দুর্ঘটনার ফলে অক্ষমতা'),
 
                     const SizedBox(height: 16),
-                    _buildCheckboxGroup([
-                      'কোন ব্যাক্তি পতিত হওয়া',
-                      'কোন বস্তু পতিত হওয়া',
-                      'পতিত বস্তু ব্যতীত কোন বস্তু দ্বারা বস্তু কর্তৃক আঘাত।',
-                      "বিদ্যুৎ",
-                      "বিষ, ক্ষয়কারী বস্তু বা ক্ষতিকর বস্তু, বিকিরণসহ",
-                      "বিস্ফোরণ",
-                      "আগুন",
-                      "সবেগে পানি প্রবেশ",
-                      "গ্যাসে শ্বাসরোধ",
-                      "অতিরিক্ত বল প্রয়োগ",
-                      "অতিরিক্ত চলাফেরা",
-                      "সড়ক দুর্ঘটনা (সমুদ্র/নদী সহ)",
-                      "ভূমিধস",
-                      "উচ্চতা থেকে পড়ে",
-                      "বয়লার বা পানির পাইপ বা সিলিন্ডার বিস্ফোরণ",
-                      "প্রাকৃতিক দূর্যোগ",
-                      "জলদস্যু/দুর্বৃত্তদের দ্বারা আক্রান্ত (শুধু মৎস্য চাসের জন্য)",
-                      "বজ্রপাত",
-                    ]),
+                    _buildCheckboxGroup(
+                      [
+                        'কোন ব্যাক্তি পতিত হওয়া',
+                        'কোন বস্তু পতিত হওয়া',
+                        'পতিত বস্তু ব্যতীত কোন বস্তু দ্বারা বস্তু কর্তৃক আঘাত।',
+                        "বিদ্যুৎ",
+                        "বিষ, ক্ষয়কারী বস্তু বা ক্ষতিকর বস্তু, বিকিরণসহ",
+                        "বিস্ফোরণ",
+                        "আগুন",
+                        "সবেগে পানি প্রবেশ",
+                        "গ্যাসে শ্বাসরোধ",
+                        "অতিরিক্ত বল প্রয়োগ",
+                        "অতিরিক্ত চলাফেরা",
+                        "সড়ক দুর্ঘটনা (সমুদ্র/নদী সহ)",
+                        "ভূমিধস",
+                        "উচ্চতা থেকে পড়ে",
+                        "বয়লার বা পানির পাইপ বা সিলিন্ডার বিস্ফোরণ",
+                        "প্রাকৃতিক দূর্যোগ",
+                        "জলদস্যু/দুর্বৃত্তদের দ্বারা আক্রান্ত (শুধু মৎস্য চাসের জন্য)",
+                        "বজ্রপাত",
+                      ],
+                      (v) {
+                        provider.updateAfterAccidentFeacture(v);
+                      },
+                    ),
                     Text("অন্যান্য এখানে লিখুন:"),
                     _buildTextField(
                       'অন্যান্য উপাদান',
-                      TextEditingController(),
+                      provider.afterAccidentFeactureController,
                       maxLines: 2,
                     ),
                     _buildSectionTitle('দুর্ঘটনার সহায়ক বস্তু'),
@@ -456,44 +390,42 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                       "দুর্ঘটনার সহায়ক বস্তুর শ্রেণিবিভাগ (যেটি প্রযোজ্য সেখানে টিক চিহ্ন দিন):",
                     ),
                     const SizedBox(height: 10),
-                    _buildCheckboxGroup([
-                      'প্রধান চালক যন্ত্র',
-                      'সঞ্চালক যন্ত্রপাতি',
-                      'উত্তোলক যন্ত্রপাতি',
-                      "কার্যরত যন্ত্রপাতি",
-                      "অন্য যন্ত্রপাতি বা সংস্থাপনসমূহ",
-                      "রেল বা ট্রলি পরিবহন",
-                      "পণ্য পরিবহন বা মাল পরিবহন",
-                      "হাতে ব্যবহারিত যন্ত্রপাতি",
-                    ]),
+                    _buildCheckboxGroup(
+                      [
+                        'প্রধান চালক যন্ত্র',
+                        'সঞ্চালক যন্ত্রপাতি',
+                        'উত্তোলক যন্ত্রপাতি',
+                        "কার্যরত যন্ত্রপাতি",
+                        "অন্য যন্ত্রপাতি বা সংস্থাপনসমূহ",
+                        "রেল বা ট্রলি পরিবহন",
+                        "পণ্য পরিবহন বা মাল পরিবহন",
+                        "হাতে ব্যবহারিত যন্ত্রপাতি",
+                      ],
+                      (v) {
+                        provider.updateAccidentHelper(v);
+                      },
+                    ),
+
                     SizedBox(height: 10),
                     Text("দাহ্য পদার্থ অন্যান্য এখানে লিখুন:"),
                     SizedBox(height: 10),
                     _buildTextField(
                       'অন্যান্য উপাদান',
-                      TextEditingController(),
+                      provider.otherFireProductController,
                       maxLines: 2,
                     ),
 
                     _buildSectionTitle('সহয়তাকারীর তথ্য'),
                     SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            'তথ্য সহায়তাকারির নাম',
-                            TextEditingController(),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildTextField(
-                            'ফোন নং',
-                            TextEditingController(),
-                          ),
-                        ),
-                      ],
+                    _buildTextField(
+                      'তথ্য সহায়তাকারির নাম',
+                      provider.informationGiveHelperController,
                     ),
+                    _buildTextField(
+                      'ফোন নং',
+                      provider.informationHelperPhoneController,
+                    ),
+
                     SizedBox(height: 20),
                     Row(
                       children: [
@@ -526,6 +458,110 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
                         Expanded(
                           child: ElevatedButton.icon(
                             onPressed: () {
+                              final provider = context
+                                  .read<InformationProvider>();
+
+                              // 1️⃣ Validate all TextFormFields
+                              if (!(provider.formKey.currentState?.validate() ??
+                                  false))
+                                return;
+
+                              // 2️⃣ Validate dropdowns
+                              if (provider.gender == null ||
+                                  provider.gender == "নির্বাচন করুন") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("লিঙ্গ নির্বাচন করুন"),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (provider.maritalStatus == null ||
+                                  provider.maritalStatus == "নির্বাচন করুন") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "বৈবাহিক অবস্থা নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              // 3️⃣ Validate checkbox selections
+                              if (provider.workplaceName == null ||
+                                  provider.workplaceName!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "কর্মসংস্থানের স্থান নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (provider.workShopeName == null ||
+                                  provider.workShopeName!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "ইনফরমাল ইন্ডাস্ট্রিস নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (provider.accidentSystem == null ||
+                                  provider.accidentSystem!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "দুর্ঘটনার ধরন নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (provider.accidentHelper == null ||
+                                  provider.accidentHelper!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "দুর্ঘটনার সহায়ক বস্তু নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              // 4️⃣ Validate dates
+                              if (provider.accidentDate == null ||
+                                  provider.accidentDate!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "দুর্ঘটনার তারিখ নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              if (provider.accidentSystem == "মৃত্যু") {
+                                if (provider.ifDeath == null ||
+                                    provider.ifDeath!.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "মৃত্যুর তারিখ নির্বাচন করুন",
+                                      ),
+                                    ),
+                                  );
+                                  return;
+                                }
+                              }
+
+                              // ✅ All validation passed -> Navigate to next page
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -627,28 +663,35 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
     String label,
     TextEditingController controller, {
     IconData? suffixIcon,
+    Function()? onTapSuffixIcon,
     int maxLines = 1,
+    bool readonly = false,
+    String? Function(String?)? validator, // <-- optional custom validator
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: TextFormField(
+        readOnly: readonly,
         controller: controller,
         maxLines: maxLines,
         decoration: InputDecoration(
           labelText: label,
           border: const OutlineInputBorder(),
-          suffixIcon: suffixIcon != null ? Icon(suffixIcon) : null,
+          suffixIcon: suffixIcon != null
+              ? InkWell(onTap: onTapSuffixIcon, child: Icon(suffixIcon))
+              : null,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 12,
             vertical: 12,
           ),
         ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'এই ক্ষেত্রটি পূরণ করুন';
-          }
-          return null;
-        },
+        validator:
+            validator ??
+            (value) {
+              if (value == null || value.isEmpty)
+                return 'এই ক্ষেত্রটি পূরণ করুন';
+              return null;
+            },
       ),
     );
   }
@@ -657,8 +700,9 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
     String label,
     String? value,
     List<String> items,
-    Function(String?) onChanged,
-  ) {
+    Function(String?) onChanged, {
+    bool requiredField = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: DropdownButtonFormField<String>(
@@ -671,76 +715,54 @@ class _InformationFormScreenState extends State<InformationFormScreen> {
             vertical: 12,
           ),
         ),
-        items: items.map((String item) {
+        items: items.map((item) {
           return DropdownMenuItem<String>(value: item, child: Text(item));
         }).toList(),
         onChanged: onChanged,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'একটি অপশন নির্বাচন করুন';
-          }
-          return null;
-        },
+        validator: requiredField
+            ? (val) {
+                if (val == null || val.isEmpty || val == items[0]) {
+                  return 'একটি অপশন নির্বাচন করুন';
+                }
+                return null;
+              }
+            : null,
       ),
     );
   }
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _fatherNameController.dispose();
-    _motherNameController.dispose();
-    _spouseNameController.dispose();
-    _birthDateController.dispose();
-    _nidController.dispose();
-    _birthCertificateController.dispose();
-    _passportController.dispose();
-    _phoneController.dispose();
-    _emailController.dispose();
-    _permanentVillageController.dispose();
-    _permanentPostOfficeController.dispose();
-    _permanentDistrictController.dispose();
-    _permanentDivisionController.dispose();
-    _presentVillageController.dispose();
-    _presentPostOfficeController.dispose();
-    _presentDistrictController.dispose();
-    _presentDivisionController.dispose();
-    _sscRollController.dispose();
-    _sscRegController.dispose();
-    _sscYearController.dispose();
-    _sscBoardController.dispose();
-    _sscGpaController.dispose();
-    _hscRollController.dispose();
-    _hscRegController.dispose();
-    _hscYearController.dispose();
-    _hscBoardController.dispose();
-    _hscGpaController.dispose();
-    super.dispose();
+  Widget _buildCheckboxGroup(
+    List<String> items,
+    Function(String?) onChanged, {
+    String? selectedValue,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: items.map((item) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            bool isChecked = selectedValue == item;
+
+            return CheckboxListTile(
+              value: isChecked,
+              title: Text(item),
+              activeColor: Colors.blue,
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+              onChanged: (value) {
+                setState(() {
+                  isChecked = value ?? false;
+                });
+                if (isChecked) {
+                  onChanged(item); // pass selected item
+                } else {
+                  onChanged(null); // uncheck
+                }
+              },
+            );
+          },
+        );
+      }).toList(),
+    );
   }
-}
-
-Widget _buildCheckboxGroup(List<String> items) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: items.map((item) {
-      return StatefulBuilder(
-        builder: (context, setState) {
-          bool isChecked = false;
-
-          return CheckboxListTile(
-            value: isChecked,
-            title: Text(item),
-            activeColor: Colors.blue,
-            controlAffinity: ListTileControlAffinity.leading,
-            contentPadding: EdgeInsets.zero,
-            onChanged: (value) {
-              setState(() {
-                isChecked = value ?? false;
-              });
-            },
-          );
-        },
-      );
-    }).toList(),
-  );
 }

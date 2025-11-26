@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:from_app/common/custom_laoding_dialog.dart';
+import 'package:from_app/presentation/authentication/forgot_password.dart'
+    show ForgotPasswordPage;
 import 'package:from_app/presentation/home/submit_page.dart';
 import 'package:provider/provider.dart';
 import '../../provider/auth_provider.dart';
@@ -64,7 +66,26 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 30),
+            // FORGOT PASSWORD
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  // TODO: Navigate to Forgot Password Screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ForgotPasswordPage()),
+                  );
+                },
+                child: const Text(
+                  "Forgot Password?",
+                  style: TextStyle(
+                    color: Color(0xFF1976FF),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
 
             // LOGIN BUTTON
             SizedBox(
@@ -116,7 +137,7 @@ class LoginScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) =>  SignupScreen()),
+                      MaterialPageRoute(builder: (_) => SignupScreen()),
                     );
                   },
                   child: const Text(
