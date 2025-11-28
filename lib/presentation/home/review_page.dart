@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:from_app/presentation/home/submit_page.dart';
 import 'package:from_app/presentation/home/widget/info_review.dart';
+import 'package:from_app/provider/information_provider.dart';
+import 'package:provider/provider.dart';
 
 class ReviewPage extends StatelessWidget {
   const ReviewPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<InformationProvider>();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -68,52 +71,52 @@ class ReviewPage extends StatelessWidget {
               InfoTile(
                 icon: Icons.person,
                 title: "তথ্য সংগ্রাহীর নাম",
-                value: "-",
+                value: provider.informationGiveHelperController.text,
               ),
               InfoTile(
                 icon: Icons.people,
                 title: "দুঃখজনক ঘটনার ব্যক্তির নাম",
-                value: "Chester Robinson",
+                value:provider.nameController.text,
               ),
               InfoTile(
                 icon: Icons.calendar_month,
                 title: "জন্ম তারিখ",
-                value: "21-Dec-1985",
+                value: provider.birthDateController.text,
               ),
               InfoTile(
                 icon: Icons.credit_card,
                 title: "জাতীয় পরিচয় পত্র নম্বর",
-                value: "Obcaecati commodo pe",
+                value: provider.nidController.text,
               ),
               InfoTile(
                 icon: Icons.male,
                 title: "পিতার নাম",
-                value: "Emerson Robbins",
+                value: provider.fatherNameController.text,
               ),
               InfoTile(
                 icon: Icons.female,
                 title: "মাতার নাম",
-                value: "Katelyn Weber",
+                value: provider.motherNameController.text,
               ),
               InfoTile(
                 icon: Icons.favorite,
                 title: "স্বামী/স্ত্রীর নাম",
-                value: "Hoyt Barlow",
+                value: provider.spouseNameController.text,
               ),
               InfoTile(
                 icon: Icons.calendar_today,
                 title: "বয়স",
-                value: "Saepe quod sint hic",
+                value: provider.ageController.text,
               ),
               InfoTile(
                 icon: Icons.transgender,
                 title: "লিঙ্গ",
-                value: "অন্যান্য",
+                value: provider.gender!,
               ),
               InfoTile(
                 icon: Icons.info,
                 title: "বৈবাহিক অবস্থা",
-                value: "বিবাহিত",
+                value: provider.maritalStatus!,
               ),
 
               // --------------------------------------
@@ -146,20 +149,20 @@ class ReviewPage extends StatelessWidget {
               ),
 
               // Grid items
-              const InfoTile(
+              InfoTile(
                 icon: Icons.location_on,
                 title: "বর্তমান ঠিকানা",
-                value: "Aut voluptatem Sit",
+                value: provider.currentAddressController.text 
               ),
-              const InfoTile(
+               InfoTile(
                 icon: Icons.home,
                 title: "স্থায়ী ঠিকানা",
-                value: "Itaque sint suscipit",
+                value: provider.permanentAddressController.text,
               ),
-              const InfoTile(
+               InfoTile(
                 icon: Icons.call,
                 title: "মোবাইল/পরিবারের যোগাযোগ",
-                value: "Libero sequi nostrum",
+                value: provider. phoneController.text
               ),
 
               // --------------------------------------
@@ -191,40 +194,40 @@ class ReviewPage extends StatelessWidget {
                 ),
               ),
 
-              const InfoTile(
+               InfoTile(
                 icon: Icons.store,
                 title: "কারখানা/প্রতিষ্ঠানের নাম ও ঠিকানা",
-                value: "Dexter Pierce",
+                value: provider.officeNameController.text!,
               ),
-              const InfoTile(
+               InfoTile(
                 icon: Icons.receipt,
                 title: "রেজি. নং",
-                value: "Commodi velit velit",
+                value: provider.officeRegistrationController.text,
               ),
-              const InfoTile(
+               InfoTile(
                 icon: Icons.phone_in_talk,
                 title: "টেলিফোন, মোবাইল, ফ্যাক্স ও ইমেইল",
-                value: "Voluptatum ducimus",
+                value: provider.officeTelephoneController.text,
               ),
-              const InfoTile(
+               InfoTile(
                 icon: Icons.people,
                 title: "ম্যানেজারের ফোন নম্বর",
-                value: "Blanditiis esse sint",
+                value: provider.officeMdNameController.text ,
               ),
-              const InfoTile(
+              InfoTile(
                 icon: Icons.production_quantity_limits,
                 title: "উৎপাদিত দ্রব্য/সেবার প্রকার ও ধরন",
-                value: "A quis anim esse vo",
+                value:  provider.produceProductNameController.text,
               ),
-              const InfoTile(
+               InfoTile(
                 icon: Icons.place,
                 title: "স্থান/শাখা/বিভাগ",
-                value: "Quisquam aut nisi ip",
+                value:  provider.accidentPlaceController.text,
               ),
-              const InfoTile(
+               InfoTile(
                 icon: Icons.domain,
                 title: "মজুরি",
-                value: "Eum ut quod proident",
+                value: provider.accidentPersonSalaryController.text,
               ),
 
               // --------------------------------------
@@ -256,46 +259,46 @@ class ReviewPage extends StatelessWidget {
                 ),
               ),
 
-              const InfoTile(
+               InfoTile(
                 icon: Icons.info_outline,
                 title: "কারখানার নাম",
-                value: "পাটকল",
+                value: provider.workShopeName!,
               ),
 
-              const InfoTile(
+               InfoTile(
                 icon: Icons.info_outline,
                 title: "দুঘটনার ধরন",
-                value: "স্থায়ী আংশিক দৈহিক অক্ষমতা",
+                value: provider.accidentSystem!,
               ),
 
-              const InfoTile(
+               InfoTile(
                 icon: Icons.info_outline,
                 title: "দুঘটনার অংশ",
-                value: "পায়ের বড়ো আঙ্গুল: Cum consequatur Sed",
+                value: "",
               ),
 
-              const InfoTile(
+               InfoTile(
                 icon: Icons.info_outline,
                 title: "আঘাতপ্রাপ্ত অংশ",
-                value: "আঙ্গুল: Voluptate nemo reici",
+                value: provider.bodyPartFeacture!,
               ),
 
-              const InfoTile(
+               InfoTile(
                 icon: Icons.info_outline,
                 title: "সহায়তাকারীর অংশ",
-                value: "হাতে ব্যবহৃতিত হাতুড়িপাটি: Ut harum autem animi",
+                value:provider.accidentHelper!,
               ),
 
-              const InfoTile(
+               InfoTile(
                 icon: Icons.timer,
                 title: "দুঘটনার তারিখ ও সময়",
-                value: "2015-01-07T00:14",
+                value: provider.accidentDate!,
               ),
 
-              const InfoTile(
+               InfoTile(
                 icon: Icons.timelapse,
                 title: "মৃত্যুর তারিখ ও সময়",
-                value: "1980-09-05T17:36",
+                value: provider.ifDeath ?? "",
               ),
 
               Center(

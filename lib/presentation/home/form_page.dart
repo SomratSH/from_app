@@ -97,7 +97,7 @@ class InformationFormScreen extends StatelessWidget {
                     SizedBox(height: 5),
                     _buildTextField(
                       'দুর্ভিক্ষা কবলিত ব্যাক্তির বয়স',
-                      provider.ageController,
+                      provider.phoneController,
                     ),
                     SizedBox(height: 5),
 
@@ -142,39 +142,34 @@ class InformationFormScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-
-                    _buildCheckboxGroup(
-                      [
-                        'তৈরি পোশাক কারখানা',
-                        'চা শিল্প',
-                        'জুতার কারখানা',
-                        'নির্মান ও অবকাঠামো ভাঙ্গা।',
-                        'করলা খনি',
-                        "সরকারি পরিষেবা কর্মী",
-                        "চিনি কল",
-                        "চালের কল",
-                        "ভ্যালু চেইন",
-                        "জাহাজ ভাঙ্গা বা জাহাজ নির্মাণ",
-                        "পরিবহন",
-                        "স্টিল মিল ও রি-রোলিং",
-                        "গ্যাস ক্ষেত্র",
-                        "ফার্মাসিউটিক্যালস",
-                        "কাগজের কারখানা",
-                        "অটোমোবাইল",
-                        "ট্যানারি কারখানা বা চামড়া শিল্প"
-                            "মৎস্য",
-                        "খাদ্য ও পানিয়",
-                        "পাটকল",
-                        "সেবা খাত (স্বাস্থ্য পরিচর্যা, নার্স, ক্লিনার, সিকিউরিটি গার্ড, হোটেল বয়, ওয়াসা কর্মী, ডেসা কর্মী)",
-                        "রাসায়নিক শিল্প",
-                        "ইট তৈরির কারখানা",
-                        "ঝালাই কারখানা",
-                      ],
-                      (v) {
-                        provider.updateWorkPlaceName(v);
-                      },
+                    Column(
+                      children: List.generate(provider.firstList.length, (
+                        index,
+                      ) {
+                        return CheckboxListTile(
+controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(provider.firstList[index]),
+                          value: provider.firstListCheck[index],
+                          onChanged: (v) {
+                            provider.updateWorkPlaceName(
+                              index,
+                              provider.firstList[index],
+                            );
+                          },
+                        );
+                      }),
                     ),
 
+                    // _buildCheckboxGroup(
+                    //  provider.firstList,
+
+                    //   (v) {
+                    //     provider.updateWorkPlaceName(v);
+
+                    //   },
+                    //   isSelected: provider.firstList,
+
+                    // ),
                     const SizedBox(height: 8),
 
                     _buildTextField(
@@ -193,26 +188,31 @@ class InformationFormScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
 
-                    _buildCheckboxGroup(
-                      [
-                        'পাথর কারখানা।',
-                        'জেলে',
-                        'কসাই',
-                        'ফসল উৎপাদন কর্মী।',
-                        'হস্ত শিল্প অথবা অনানুষ্ঠানিক পরিবহন কর্মী (রিকশা/মোকা/ভান) হলে এখানে লিখুন',
-                        'তাঁত',
-                        'পুহস্তী',
-                        'দিনমজুর।',
-                        'আসবাবপত্র তৈরী কর্মী',
-                        'স্বর্ণকার।',
-                        'ফেরিওয়ালা',
-                        'নির্মাণ পুহস্তী সম্পর্কিত ব্যাক্তিত্ব।',
-                      ],
-                      (v) {
-                        provider.updateWorkshopName(v);
-                      },
+                    Column(
+                      children: List.generate(provider.secondList.length, (
+                        index,
+                      ) {
+                        return CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(provider.secondList[index]),
+                          value: provider.secondListCheck[index],
+                          onChanged: (v) {
+                            provider.updateWorkshopName(
+                              index,
+                              provider.secondList[index],
+                            );
+                          },
+                        );
+                      }),
                     ),
 
+                    // _buildCheckboxGroup(
+                    //  provider.secondList ,
+                    //   (v) {
+                    //     provider.updateWorkshopName(v);
+                    //   },
+                    //    isSelected:  provider. secondListCheck,
+                    // ),
                     _buildTextField(
                       'অন্যান্য উপাদান',
                       provider.othersProductController,
@@ -283,17 +283,31 @@ class InformationFormScreen extends StatelessWidget {
                     _buildSectionTitle('দুর্ঘটনার ধরন'),
 
                     const SizedBox(height: 16),
-                    _buildCheckboxGroup(
-                      [
-                        'মৃত্যু',
-                        'স্থায়ী পূর্ণ দৈহিক অক্ষমতা',
-                        'স্থায়ী আংশিক দৈহিক অক্ষমতা',
-                        "জখমের ফলে ১৬ ঘন্টার অতিরিক্ত এবং ২০ দিন পর্যন্ত কাজে অনুপস্থিতির কারণ ঘটলে",
-                      ],
-                      (v) {
-                        provider.updateAccidentSystem(v);
-                      },
+
+                    Column(
+                      children: List.generate(provider.thirdList.length, (
+                        index,
+                      ) {
+                        return CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(provider.thirdList[index]),
+                          value: provider.thirdListCheck[index],
+                          onChanged: (v) {
+                            provider.updateAccidentSystem(
+                              index,
+                              provider.thirdList[index],
+                            );
+                          },
+                        );
+                      }),
                     ),
+                    // _buildCheckboxGroup(
+                    //  provider.thirdList,
+                    //   (v) {
+                    //     provider.updateAccidentSystem(v);
+                    //   },
+                    //   isSelected: provider.thirdListCheck,
+                    // ),
                     SizedBox(height: 10),
                     Text("যদি মৃত্যু হয় তাহলে মৃত্যুর তারিখ ও সময় উল্লেখ করুন"),
                     SizedBox(height: 15),
@@ -318,65 +332,68 @@ class InformationFormScreen extends StatelessWidget {
                         }
                       },
                     ),
-                    const SizedBox(height: 16),
-                    _buildSectionTitle('অঙ্গহানির বিবরণ'),
-                    _buildCheckboxGroup(
-                      [
-                        'ডান বাহু কনুই-এ অথবা কনুই এর উপরে।',
-                        'পা-হাঁটুতে বা হাঁটুর উপরে।',
-                        'শ্রবণশক্তি স্থায়ী পূর্ণ',
-                        "এক পায়ের সব কয়টি আঙ্গুল",
-                        "পায়ের বুড়ো আঙ্গুল",
-                        "বাম বাহু কনুই-এ অথবা কনুই এর উপরে",
-                        "পা হাঁটুর নীচে",
-                        "এক চোখ",
-                        "বৃদ্ধাঙ্গুলির একটি হাঁড়",
-                        "ডান বাহু কনুই এর নিচে",
-                        "বাম বাহু কনুই এর নীচে",
-                        "বৃদ্ধাঙ্গুলি",
-                        "তর্জনী",
-                       
-                      ],
-                      (v) {
-                        provider.updateBodyPartFeacture(v);
-                      },
+                  provider.accidentSystem == null ||  provider.accidentSystem == "মৃত্যু"  ? SizedBox() : SizedBox(height: 16),
+                provider.accidentSystem == null ||   provider.accidentSystem == "মৃত্যু"  ? SizedBox() : _buildSectionTitle('অঙ্গহানির বিবরণ'),
+                  provider.accidentSystem == null ||  provider.accidentSystem == "মৃত্যু"  ? SizedBox() : Column(
+                      children: List.generate(provider.fourthList.length, (
+                        index,
+                      ) {
+                        return CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(provider.fourthList[index]),
+                          value: provider.fourthListCheck[index],
+                          onChanged: (v) {
+                            provider.updateBodyPartFeacture(
+                              index,
+                              provider.fourthList[index],
+                            );
+                          },
+                        );
+                      }),
                     ),
+                    // _buildCheckboxGroup(
+                    //  provider.fourthList,
+                    //   (v) {
+                    //     provider.updateBodyPartFeacture(v);
+                    //   },
+                    //   isSelected: provider.fourthListCheck,
+                    // ),
                     Text("তর্জনী বাদে অন্য কোন আঙ্গুল অন্যান্য এখানে লিখুন:"),
                     SizedBox(height: 15),
                     _buildTextField(
                       'অন্যান্য উপাদান',
                       provider.otherBoydpartFecatureController,
-                      
                     ),
 
                     _buildSectionTitle('দুর্ঘটনার ফলে অক্ষমতা'),
 
                     const SizedBox(height: 16),
-                    _buildCheckboxGroup(
-                      [
-                        'কোন ব্যাক্তি পতিত হওয়া',
-                        'কোন বস্তু পতিত হওয়া',
-                        'পতিত বস্তু ব্যতীত কোন বস্তু দ্বারা বস্তু কর্তৃক আঘাত।',
-                        "বিদ্যুৎ",
-                        "বিষ, ক্ষয়কারী বস্তু বা ক্ষতিকর বস্তু, বিকিরণসহ",
-                        "বিস্ফোরণ",
-                        "আগুন",
-                        "সবেগে পানি প্রবেশ",
-                        "গ্যাসে শ্বাসরোধ",
-                        "অতিরিক্ত বল প্রয়োগ",
-                        "অতিরিক্ত চলাফেরা",
-                        "সড়ক দুর্ঘটনা (সমুদ্র/নদী সহ)",
-                        "ভূমিধস",
-                        "উচ্চতা থেকে পড়ে",
-                        "বয়লার বা পানির পাইপ বা সিলিন্ডার বিস্ফোরণ",
-                        "প্রাকৃতিক দূর্যোগ",
-                        "জলদস্যু/দুর্বৃত্তদের দ্বারা আক্রান্ত (শুধু মৎস্য চাসের জন্য)",
-                        "বজ্রপাত",
-                      ],
-                      (v) {
-                        provider.updateAfterAccidentFeacture(v);
-                      },
+                    Column(
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(provider.fifthList.length, (
+                        index,
+                      ) {
+                        return CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(provider.fifthList[index]),
+                          value: provider.fifthistCheck[index],
+                          onChanged: (v) {
+                            provider.updateAfterAccidentFeacture(
+                              index,
+                              provider.fifthList[index],
+                            );
+                          },
+                        );
+                      }),
                     ),
+
+                    // _buildCheckboxGroup(
+                    // provider.fifthList,
+                    //   (v) {
+                    //     provider.updateAfterAccidentFeacture(v);
+                    //   },
+                    //   isSelected: provider.fifthistCheck
+                    // ),
                     Text("অন্যান্য এখানে লিখুন:"),
                     _buildTextField(
                       'অন্যান্য উপাদান',
@@ -390,22 +407,31 @@ class InformationFormScreen extends StatelessWidget {
                       "দুর্ঘটনার সহায়ক বস্তুর শ্রেণিবিভাগ (যেটি প্রযোজ্য সেখানে টিক চিহ্ন দিন):",
                     ),
                     const SizedBox(height: 10),
-                    _buildCheckboxGroup(
-                      [
-                        'প্রধান চালক যন্ত্র',
-                        'সঞ্চালক যন্ত্রপাতি',
-                        'উত্তোলক যন্ত্রপাতি',
-                        "কার্যরত যন্ত্রপাতি",
-                        "অন্য যন্ত্রপাতি বা সংস্থাপনসমূহ",
-                        "রেল বা ট্রলি পরিবহন",
-                        "পণ্য পরিবহন বা মাল পরিবহন",
-                        "হাতে ব্যবহারিত যন্ত্রপাতি",
-                      ],
-                      (v) {
-                        provider.updateAccidentHelper(v);
-                      },
+                    Column(
+                      children: List.generate(provider.sixthList.length, (
+                        index,
+                      ) {
+                        return CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(provider.sixthList[index]),
+                          value: provider.sixthListCheck[index],
+                          onChanged: (v) {
+                            provider.updateAccidentHelper(
+                              index,
+                              provider.sixthList[index],
+                            );
+                          },
+                        );
+                      }),
                     ),
 
+                    // _buildCheckboxGroup(
+                    //   provider.sixthList,
+                    //   (v) {
+                    //     provider.updateAccidentHelper(v);
+                    //   },
+                    //   isSelected: provider.sixthListCheck,
+                    // ),
                     SizedBox(height: 10),
                     Text("দাহ্য পদার্থ অন্যান্য এখানে লিখুন:"),
                     SizedBox(height: 10),
@@ -458,108 +484,108 @@ class InformationFormScreen extends StatelessWidget {
                         Expanded(
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              final provider = context
-                                  .read<InformationProvider>();
+                              // final provider = context
+                              //     .read<InformationProvider>();
 
-                              // 1️⃣ Validate all TextFormFields
-                              if (!(provider.formKey.currentState?.validate() ??
-                                  false))
-                                return;
+                              // // 1️⃣ Validate all TextFormFields
+                              // if (!(provider.formKey.currentState?.validate() ??
+                              //     false))
+                              //   return;
 
-                              // 2️⃣ Validate dropdowns
-                              if (provider.gender == null ||
-                                  provider.gender == "নির্বাচন করুন") {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("লিঙ্গ নির্বাচন করুন"),
-                                  ),
-                                );
-                                return;
-                              }
-                              if (provider.maritalStatus == null ||
-                                  provider.maritalStatus == "নির্বাচন করুন") {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      "বৈবাহিক অবস্থা নির্বাচন করুন",
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
+                              // // 2️⃣ Validate dropdowns
+                              // if (provider.gender == null ||
+                              //     provider.gender == "নির্বাচন করুন") {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //       content: Text("লিঙ্গ নির্বাচন করুন"),
+                              //     ),
+                              //   );
+                              //   return;
+                              // }
+                              // if (provider.maritalStatus == null ||
+                              //     provider.maritalStatus == "নির্বাচন করুন") {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //       content: Text(
+                              //         "বৈবাহিক অবস্থা নির্বাচন করুন",
+                              //       ),
+                              //     ),
+                              //   );
+                              //   return;
+                              // }
 
-                              // 3️⃣ Validate checkbox selections
-                              if (provider.workplaceName == null ||
-                                  provider.workplaceName!.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      "কর্মসংস্থানের স্থান নির্বাচন করুন",
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-                              if (provider.workShopeName == null ||
-                                  provider.workShopeName!.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      "ইনফরমাল ইন্ডাস্ট্রিস নির্বাচন করুন",
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-                              if (provider.accidentSystem == null ||
-                                  provider.accidentSystem!.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      "দুর্ঘটনার ধরন নির্বাচন করুন",
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-                              if (provider.accidentHelper == null ||
-                                  provider.accidentHelper!.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      "দুর্ঘটনার সহায়ক বস্তু নির্বাচন করুন",
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
+                              // // 3️⃣ Validate checkbox selections
+                              // if (provider.workplaceName == null ||
+                              //     provider.workplaceName!.isEmpty) {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //       content: Text(
+                              //         "কর্মসংস্থানের স্থান নির্বাচন করুন",
+                              //       ),
+                              //     ),
+                              //   );
+                              //   return;
+                              // }
+                              // if (provider.workShopeName == null ||
+                              //     provider.workShopeName!.isEmpty) {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //       content: Text(
+                              //         "ইনফরমাল ইন্ডাস্ট্রিস নির্বাচন করুন",
+                              //       ),
+                              //     ),
+                              //   );
+                              //   return;
+                              // }
+                              // if (provider.accidentSystem == null ||
+                              //     provider.accidentSystem!.isEmpty) {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //       content: Text(
+                              //         "দুর্ঘটনার ধরন নির্বাচন করুন",
+                              //       ),
+                              //     ),
+                              //   );
+                              //   return;
+                              // }
+                              // if (provider.accidentHelper == null ||
+                              //     provider.accidentHelper!.isEmpty) {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //       content: Text(
+                              //         "দুর্ঘটনার সহায়ক বস্তু নির্বাচন করুন",
+                              //       ),
+                              //     ),
+                              //   );
+                              //   return;
+                              // }
 
-                              // 4️⃣ Validate dates
-                              if (provider.accidentDate == null ||
-                                  provider.accidentDate!.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      "দুর্ঘটনার তারিখ নির্বাচন করুন",
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
+                              // // 4️⃣ Validate dates
+                              // if (provider.accidentDate == null ||
+                              //     provider.accidentDate!.isEmpty) {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //       content: Text(
+                              //         "দুর্ঘটনার তারিখ নির্বাচন করুন",
+                              //       ),
+                              //     ),
+                              //   );
+                              //   return;
+                              // }
 
-                              if (provider.accidentSystem == "মৃত্যু") {
-                                if (provider.ifDeath == null ||
-                                    provider.ifDeath!.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                        "মৃত্যুর তারিখ নির্বাচন করুন",
-                                      ),
-                                    ),
-                                  );
-                                  return;
-                                }
-                              }
+                              // if (provider.accidentSystem == "মৃত্যু") {
+                              //   if (provider.ifDeath == null ||
+                              //       provider.ifDeath!.isEmpty) {
+                              //     ScaffoldMessenger.of(context).showSnackBar(
+                              //       const SnackBar(
+                              //         content: Text(
+                              //           "মৃত্যুর তারিখ নির্বাচন করুন",
+                              //         ),
+                              //       ),
+                              //     );
+                              //     return;
+                              //   }
+                              // }
 
                               // ✅ All validation passed -> Navigate to next page
                               Navigator.push(
@@ -733,36 +759,20 @@ class InformationFormScreen extends StatelessWidget {
 
   Widget _buildCheckboxGroup(
     List<String> items,
-    Function(String?) onChanged, {
-    String? selectedValue,
+    Function(String) onChanged, {
+    required List<bool> isSelected,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: items.map((item) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            bool isChecked = selectedValue == item;
-
-            return CheckboxListTile(
-              value: isChecked,
-              title: Text(item),
-              activeColor: Colors.blue,
-              controlAffinity: ListTileControlAffinity.leading,
-              contentPadding: EdgeInsets.zero,
-              onChanged: (value) {
-                setState(() {
-                  isChecked = value ?? false;
-                });
-                if (isChecked) {
-                  onChanged(item); // pass selected item
-                } else {
-                  onChanged(null); // uncheck
-                }
-              },
-            );
+      children: List.generate(items.length, (index) {
+        return CheckboxListTile(
+          title: Text(items[index]),
+          value: isSelected[index],
+          onChanged: (_) {
+            onChanged(items[index]); // parent updates the list
           },
         );
-      }).toList(),
+      }),
     );
   }
 }

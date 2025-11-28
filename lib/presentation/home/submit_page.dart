@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:from_app/common/custom_laoding_dialog.dart';
 import 'package:from_app/presentation/home/home_page.dart';
+import 'package:from_app/provider/home_provider.dart';
 import 'package:from_app/provider/information_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +11,7 @@ class SubmitPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<InformationProvider>();
+    final homeProvider = context.watch<HomeProvider>();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -58,7 +61,7 @@ class SubmitPage extends StatelessWidget {
                           fontSize: 16,
                           color: Colors.white,
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -90,7 +93,7 @@ class SubmitPage extends StatelessWidget {
               provider.spouseNameController.text,
             ),
             const Divider(height: 1),
-            _buildInfoRow('বয়স', provider.ageController.text),
+            _buildInfoRow('বয়স', provider.ageController.text ?? " "),
             const Divider(height: 1),
             _buildInfoRow('লিঙ্গ', provider.gender!),
             const Divider(height: 1),
@@ -234,13 +237,17 @@ class SubmitPage extends StatelessWidget {
               provider.afterAccidentFeactureController.text,
             ),
             const Divider(height: 1),
-            _buildInfoRow('আঘাতপ্রাপ্ত অংশ', provider.bodyPartFeacture ?? provider.otherBoydpartFecatureController.text),
+            _buildInfoRow(
+              'আঘাতপ্রাপ্ত অংশ',
+              provider.bodyPartFeacture ??
+                  provider.otherBoydpartFecatureController.text,
+            ),
             const Divider(height: 1),
             _buildInfoRow('সহায়তাকারী অংশ', provider.accidentHelper!),
             const Divider(height: 1),
             _buildInfoRow('দুর্ঘটনার তারিখ ও সময়', provider.accidentDate!),
             const Divider(height: 1),
-            _buildInfoRow('মৃত্যুর তারিখ ও সময়', provider.ifDeath!),
+            _buildInfoRow('মৃত্যুর তারিখ ও সময়', provider.ifDeath ?? ""),
             const Divider(height: 1),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -306,16 +313,31 @@ class SubmitPage extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () {
+                      onPressed: () async {
                         // Print action
-                        CustomSnackbar.show(
-                          context,
-                          message: "Successfully Submit",
-                        );
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
+
+                        LoadingDialog.show(context);
+                        final value = await provider.submitExample();
+
+                        if (value) {
+                          LoadingDialog.hide(context);
+                          CustomSnackbar.show(
+                            context,
+                            message: "Successfully Submit",
+                          );
+                        await  homeProvider.fetchCounts();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                          );
+                        } else {
+                          LoadingDialog.hide(context);
+                          CustomSnackbar.show(
+                            context,
+                            message: "Somthing worng, try agian",
+                            backgroundColor: Colors.red,
+                          );
+                        }
                       },
                       icon: const Icon(Icons.print, size: 20),
                       label: const Text(
