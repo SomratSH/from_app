@@ -13,12 +13,14 @@ class ReviewPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1976D2),
+        backgroundColor: Colors.red,
         title: const Text(
           'তথ্য সংগ্রহকারী ফর্ম',
           style: TextStyle(color: Colors.white),
         ),
-        leading: Icon(Icons.menu, color: Colors.white),
+         leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(Icons.arrow_back, color: Colors.white)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -46,21 +48,22 @@ class ReviewPage extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: const Color(0xffe8f1ff),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(6),
                   border: Border(
-                    bottom: BorderSide(color: Colors.blue.shade800, width: 2),
+                    bottom: BorderSide(color: Colors.white, width: 2),
                   ),
                 ),
                 child: const Row(
                   children: [
-                    Icon(Icons.person, color: Colors.blue),
+                    Icon(Icons.person, color: Colors.white),
                     SizedBox(width: 10),
                     Text(
                       "ব্যক্তিগত তথ্য",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ],
@@ -127,21 +130,22 @@ class ReviewPage extends StatelessWidget {
                 padding: const EdgeInsets.all(14),
                 margin: const EdgeInsets.only(top: 20, bottom: 10),
                 decoration: BoxDecoration(
-                  color: const Color(0xffe8f1ff),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(6),
                   border: Border(
-                    bottom: BorderSide(color: Colors.blue.shade800, width: 2),
+                    bottom: BorderSide(color: Colors.red.shade200, width: 2),
                   ),
                 ),
                 child: const Row(
                   children: [
-                    Icon(Icons.contact_mail, color: Colors.blue),
+                    Icon(Icons.contact_mail, color: Colors.white),
                     SizedBox(width: 10),
                     Text(
                       "যোগাযোগের তথ্য",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ],
@@ -173,21 +177,22 @@ class ReviewPage extends StatelessWidget {
                 padding: const EdgeInsets.all(14),
                 margin: const EdgeInsets.only(top: 20, bottom: 10),
                 decoration: BoxDecoration(
-                  color: const Color(0xffe8f1ff),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(6),
                   border: Border(
-                    bottom: BorderSide(color: Colors.blue.shade800, width: 2),
+                    bottom: BorderSide(color: Colors.red.shade800, width: 2),
                   ),
                 ),
                 child: const Row(
                   children: [
-                    Icon(Icons.work, color: Colors.blue),
+                    Icon(Icons.work, color: Colors.white),
                     SizedBox(width: 10),
                     Text(
                       "কর্মক্ষেত্রের তথ্য",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ],
@@ -238,21 +243,22 @@ class ReviewPage extends StatelessWidget {
                 padding: const EdgeInsets.all(14),
                 margin: const EdgeInsets.only(top: 20, bottom: 10),
                 decoration: BoxDecoration(
-                  color: const Color(0xffe8f1ff),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(6),
                   border: Border(
-                    bottom: BorderSide(color: Colors.blue.shade800, width: 2),
+                    bottom: BorderSide(color: Colors.red.shade800, width: 2),
                   ),
                 ),
                 child: const Row(
                   children: [
-                    Icon(Icons.warning_amber_rounded, color: Colors.blue),
+                    Icon(Icons.warning_amber_rounded, color: Colors.red),
                     SizedBox(width: 10),
                     Text(
                       "দুঘটনার তথ্য",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ],
@@ -362,7 +368,7 @@ class ReviewPage extends StatelessWidget {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF5C6BC0),
+                          backgroundColor: Colors.red,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 24,
                             vertical: 16,

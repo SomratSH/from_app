@@ -30,7 +30,7 @@ class InfoTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 22, color: Colors.blue),
+          Icon(icon, size: 22, color: Colors.red),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -46,7 +46,7 @@ class InfoTile extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   value,
-                  style: const TextStyle(fontSize: 14),
+                  style: const TextStyle(fontSize: 14, ),
                 ),
               ],
             ),

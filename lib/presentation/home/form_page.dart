@@ -12,12 +12,14 @@ class InformationFormScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1976D2),
+        backgroundColor: Colors.red,
         title: const Text(
           'তথ্য সংগ্রহকারী ফর্ম',
           style: TextStyle(color: Colors.white),
         ),
-        leading: Icon(Icons.menu, color: Colors.white),
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(Icons.arrow_back, color: Colors.white)),
       ),
       body: Column(
         children: [
@@ -601,7 +603,7 @@ controlAffinity: ListTileControlAffinity.leading,
                               style: TextStyle(fontSize: 16),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
+                              backgroundColor: Colors.red,
                               foregroundColor: Colors.white,
                               padding: EdgeInsets.symmetric(
                                 horizontal: 20,
@@ -671,7 +673,7 @@ controlAffinity: ListTileControlAffinity.leading,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       decoration: BoxDecoration(
-        color: Colors.blue[50],
+        color: Colors.red,
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
@@ -679,7 +681,7 @@ controlAffinity: ListTileControlAffinity.leading,
         style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF1976D2),
+          color: Colors.white,
         ),
       ),
     );

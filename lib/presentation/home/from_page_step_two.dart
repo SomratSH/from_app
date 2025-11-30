@@ -72,12 +72,14 @@ class FormPageStepTwo extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1976D2),
+        backgroundColor:  Colors.red,
         title: const Text(
           'তথ্য সংগ্রহকারী ফর্ম',
           style: TextStyle(color: Colors.white),
         ),
-        leading: const Icon(Icons.menu, color: Colors.white),
+       leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(Icons.arrow_back, color: Colors.white)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -107,7 +109,7 @@ class FormPageStepTwo extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.blue[50],
+                color: Colors.red,
                 borderRadius: BorderRadius.circular(5),
               ),
               child: const Text(
@@ -115,7 +117,7 @@ class FormPageStepTwo extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -126,13 +128,13 @@ class FormPageStepTwo extends StatelessWidget {
             Center(
               child: ElevatedButton.icon(
                 onPressed: () => pickFileOptions(context),
-                icon: const Icon(Icons.upload_file, color: Colors.white),
+                icon: const Icon(Icons.upload_file, color: Colors.red),
                 label: const Text(
                   "Upload File",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.red),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.red.shade100,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 12,
@@ -240,7 +242,7 @@ class FormPageStepTwo extends StatelessWidget {
                     icon: const Icon(Icons.arrow_right_alt),
                     label: const Text("পরবর্তী ধাপ"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Colors.red,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),

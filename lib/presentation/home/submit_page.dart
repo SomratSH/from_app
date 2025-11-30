@@ -15,12 +15,14 @@ class SubmitPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1976D2),
+        backgroundColor: Colors.red,
         title: const Text(
           'তথ্য সংগ্রহকারী ফর্ম',
           style: TextStyle(color: Colors.white),
         ),
-        leading: Icon(Icons.menu, color: Colors.white),
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(Icons.arrow_back, color: Colors.white)),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -46,7 +48,7 @@ class SubmitPage extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xff667EEA),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Padding(
@@ -103,7 +105,7 @@ class SubmitPage extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xff667EEA),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Padding(
@@ -145,7 +147,7 @@ class SubmitPage extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xff667EEA),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Padding(
@@ -207,7 +209,7 @@ class SubmitPage extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xff667EEA),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Padding(
@@ -254,7 +256,7 @@ class SubmitPage extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xff667EEA),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Padding(
@@ -345,7 +347,7 @@ class SubmitPage extends StatelessWidget {
                         style: TextStyle(fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[600],
+                        backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(

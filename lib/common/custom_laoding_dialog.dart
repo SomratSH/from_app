@@ -6,52 +6,95 @@ class LoadingDialog {
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        final theme = Theme.of(context);
         return Dialog(
-          backgroundColor: Colors.blue,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          // Solution: Use UnconstrainedBox with ConstrainedBox to force width
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.red.shade600,
+                  Colors.red.shade800,
+                ],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.red.withOpacity(0.3),
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                ),
+              ],
+            ),
             child: Column(
-              spacing: 0,
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // App Icon
-                Image.asset(
-                  "assets/images/app_iocn.jpeg",
-                  width: 40,
-                  height: 40,
-                  fit: BoxFit.fill,
-                  errorBuilder: (context, error, stackTrace) {
-                    // Fallback icon if image doesn't load
-                    return Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.blue,
+                // App Icon with white background
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
                       ),
-                      child: Icon(
-                        Icons.flutter_dash,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                    );
-                  },
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      "assets/images/app_iocn.jpeg",
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        // Fallback icon if image doesn't load
+                        return Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.red.shade100,
+                          ),
+                          child: Icon(
+                            Icons.flutter_dash,
+                            color: Colors.red,
+                            size: 28,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 16),
+
+                const SizedBox(height: 20),
 
                 // Loading Indicator
                 SizedBox(
-                  width: 24,
-                  height: 24,
+                  width: 32,
+                  height: 32,
                   child: CircularProgressIndicator(
                     color: Colors.white,
-                    strokeWidth: 2,
+                    strokeWidth: 3,
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Loading Text
+                const Text(
+                  "Please wait...",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],

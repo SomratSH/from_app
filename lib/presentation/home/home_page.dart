@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Home', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF1976FF),
+        backgroundColor: Colors.red,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -27,35 +27,65 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding:  EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
+            // App Title and Subtitle
+            const Text(
+              'OSHE Accident Desk',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Track submitted accident form easily',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 30),
             // Dashboard cards
             homeProvider.isLoading
-                ? CircularProgressIndicator()
+                ? CircularProgressIndicator(color: Colors.red)
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _buildCountCard(
-                        'Total',
-                        homeProvider.total,
-                        Colors.orange,
+                      Expanded(
+                        child: _buildCountCard(
+                          'Total',
+                          homeProvider.total,
+                          Colors.orange,
+                          Icons.description,
+                        ),
                       ),
-                      _buildCountCard(
-                        'Pending',
-                        homeProvider.pending,
-                        Colors.redAccent,
+                      Expanded(
+                        child: _buildCountCard(
+                          'Pending',
+                          homeProvider.pending,
+                          Colors.redAccent,
+                          Icons.pending_actions,
+                        ),
                       ),
-                      _buildCountCard(
-                        'Approved',
-                        homeProvider.approved,
-                        Colors.green,
+                      Expanded(
+                        child: _buildCountCard(
+                          'Approved',
+                          homeProvider.approved,
+                          Colors.green,
+                          Icons.check_circle,
+                        ),
                       ),
                     ],
                   ),
             const SizedBox(height: 40),
-            // Buttons
+            // Button
             ElevatedButton.icon(
               onPressed: () {
                 // Navigate to new form
@@ -66,62 +96,116 @@ class HomePage extends StatelessWidget {
               },
               icon: const Icon(Icons.add, color: Colors.white),
               label: const Text(
-                'New Form',
-                style: TextStyle(color: Colors.white),
+                'Create New Accident Form',
+                style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
-                backgroundColor: const Color(0xFF1976FF),
+                backgroundColor: Colors.red,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
             ),
+            const Spacer(),
+            // Bottom Bangla Message
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.red.shade50,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.red.shade200),
+              ),
+              child: Column(
+                children: [
+                  const Text(
+                    'আপনার সুন্দর জন্য আমরা প্রস্তুত',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.red,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'ফর্ম পূরণে সহযোগিতার জন্য হটলাইন নম্বরে যোগাযোগ করুন',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.phone, color: Colors.red, size: 20),
+                      const SizedBox(width: 8),
+                      const Text(
+                        'Hotline: 01XXX-XXXXXX',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 20),
-            // ElevatedButton.icon(
-            //   onPressed: () {
-            //     // Navigate to forms list
-            //   },
-            //   icon: const Icon(Icons.list, color: Colors.white),
-            //   label: const Text(
-            //     'View Forms',
-            //     style: TextStyle(color: Colors.white),
-            //   ),
-            //   style: ElevatedButton.styleFrom(
-            //     minimumSize: const Size(double.infinity, 50),
-            //     backgroundColor: const Color(0xFF1976FF),
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(12),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCountCard(String title, int count, Color color) {
+ Widget _buildCountCard(String title, int count, Color color, IconData icon) {
     return Card(
       color: color,
+      elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
-        width: 100,
-        height: 100,
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              '$count',
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            Icon(
+              icon,
+              color: Colors.white,
+              size: 32,
             ),
             const SizedBox(height: 8),
-            Text(title, style: const TextStyle(color: Colors.white)),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(height: 4),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                '$count',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                maxLines: 1,
+              ),
+            ),
           ],
         ),
       ),
