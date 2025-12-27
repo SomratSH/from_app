@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:from_app/common/custom_logout_dialog.dart';
 import 'package:from_app/presentation/home/form_page.dart';
+import 'package:from_app/presentation/home/widget/shimmer_widget.dart';
 import 'package:from_app/provider/auth_provider.dart';
 import 'package:from_app/provider/home_provider.dart';
 import 'package:provider/provider.dart';
@@ -26,137 +27,161 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            // App Title and Subtitle
-            const Text(
-              'OSHE Accident Desk',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
+      body: RefreshIndicator(
+        onRefresh: () async{
+         await homeProvider.fetchCounts();
+        },
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              // App Title and Subtitle
+              const Text(
+                'OSHE Accident Desk',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Track submitted accident form easily',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+              const SizedBox(height: 8),
+              const Text(
+                'Track submitted accident form easily',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 30),
-            // Dashboard cards
-            homeProvider.isLoading
-                ? CircularProgressIndicator(color: Colors.red)
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Expanded(
-                        child: _buildCountCard(
-                          'Total',
-                          homeProvider.total,
-                          Colors.orange,
-                          Icons.description,
+              const SizedBox(height: 30),
+              // Dashboard cards
+              homeProvider.isLoading
+                  ? DashboardShimmer()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          child: _buildCountCard(
+                            'Total',
+                            homeProvider.total,
+                            Colors.orange,
+                            Icons.description,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: _buildCountCard(
-                          'Pending',
-                          homeProvider.pending,
-                          Colors.redAccent,
-                          Icons.pending_actions,
+                        Expanded(
+                          child: _buildCountCard(
+                            'Pending',
+                            homeProvider.pending,
+                            Colors.redAccent,
+                            Icons.pending_actions,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: _buildCountCard(
-                          'Approved',
-                          homeProvider.approved,
-                          Colors.green,
-                          Icons.check_circle,
+                        Expanded(
+                          child: _buildCountCard(
+                            'Approved',
+                            homeProvider.approved,
+                            Colors.green,
+                            Icons.check_circle,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+              const SizedBox(height: 40),
+              // Button
+              ElevatedButton.icon(
+                onPressed: () {
+                  // Navigate to new form
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => InformationFormScreen()),
+                  );
+                },
+                icon: const Icon(Icons.add, color: Colors.white),
+                label: const Text(
+                  'Create New Accident Form',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-            const SizedBox(height: 40),
-            // Button
-            ElevatedButton.icon(
-              onPressed: () {
-                // Navigate to new form
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => InformationFormScreen()),
-                );
-              },
-              icon: const Icon(Icons.add, color: Colors.white),
-              label: const Text(
-                'Create New Accident Form',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50),
-                backgroundColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
-            ),
-            const Spacer(),
-            // Bottom Bangla Message
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.red.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.red.shade200),
+              SizedBox(height: 10,),
+               ElevatedButton.icon(
+                onPressed: () async{
+                  // Navigate to new form
+                  await homeProvider.fetchCounts();
+                },
+                icon: const Icon(Icons.refresh, color: Colors.white),
+                label: const Text(
+                  'Refresh',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
               ),
-              child: Column(
-                children: [
-                  const Text(
-                    'আপনার সুন্দর জন্য আমরা প্রস্তুত',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.red,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'ফর্ম পূরণে সহযোগিতার জন্য হটলাইন নম্বরে যোগাযোগ করুন',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.phone, color: Colors.red, size: 20),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'Hotline: 01XXX-XXXXXX',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                        ),
+              const Spacer(),
+              // Bottom Bangla Message
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade50,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.red.shade200),
+                ),
+                child: Column(
+                  children: [
+                    const Text(
+                      'আপনার সুন্দর জন্য আমরা প্রস্তুত',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.red,
                       ),
-                    ],
-                  ),
-                ],
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'ফর্ম পূরণে সহযোগিতার জন্য হটলাইন নম্বরে যোগাযোগ করুন',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black87,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.phone, color: Colors.red, size: 20),
+                        const SizedBox(width: 8),
+                        const Text(
+                          'Hotline: 01XXX-XXXXXX',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-          ],
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
