@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -15,7 +18,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "com.app.osheaccidentdesk"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "25.1.8937393"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -35,7 +38,7 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
-      signingConfigs {
+    signingConfigs {
         create("release") {
             keyAlias = keystoreProperties["keyAlias"] as String
             keyPassword = keystoreProperties["keyPassword"] as String
@@ -49,6 +52,11 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("release")
+            ndk {
+                debugSymbolLevel = "none"
+            }
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }

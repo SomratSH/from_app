@@ -86,6 +86,7 @@ class AuthProvider extends ChangeNotifier {
         // if (data["errors"]["email"] != null) {
         //   return false;
         // }
+
         String token = data["token"];
 
         // SAVE TOKEN

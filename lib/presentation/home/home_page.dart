@@ -5,6 +5,7 @@ import 'package:from_app/presentation/home/widget/shimmer_widget.dart';
 import 'package:from_app/provider/auth_provider.dart';
 import 'package:from_app/provider/home_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -152,20 +153,25 @@ class HomePage extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.phone, color: Colors.red, size: 20),
-                        const SizedBox(width: 8),
-                        const Text(
-                          'Hotline: +8801711090660',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
+                    InkWell(
+                      onTap: (){
+                        callNumber("01711090660");
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.phone, color: Colors.red, size: 20),
+                          const SizedBox(width: 8),
+                          const Text(
+                            'Hotline: +8801711090660',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Row(
@@ -243,5 +249,18 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+
+
+
+Future<void> callNumber(String phoneNumber) async {
+  final Uri uri = Uri(scheme: 'tel', path: phoneNumber);
+
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    throw 'Could not launch $phoneNumber';
   }
 }
