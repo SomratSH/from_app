@@ -101,8 +101,8 @@ class HomePage extends StatelessWidget {
                 },
                 icon: const Icon(Icons.add, color: Colors.white),
                 label: const Text(
-                  'Create New Accident Form',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  'Accident reporting and primary case entry',
+                  style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 50),
@@ -142,16 +142,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    const Text(
-                      'আপনার সুন্দর জন্য আমরা প্রস্তুত',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.red,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 8),
+                    
                     const Text(
                       'ফর্ম পূরণে সহযোগিতার জন্য হটলাইন নম্বরে যোগাযোগ করুন',
                       style: TextStyle(
@@ -167,11 +158,28 @@ class HomePage extends StatelessWidget {
                         Icon(Icons.phone, color: Colors.red, size: 20),
                         const SizedBox(width: 8),
                         const Text(
-                          'Hotline: 01XXX-XXXXXX',
+                          'Hotline: +8801711090660',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.location_city, color: Colors.green, size: 20),
+                        const SizedBox(width: 8),
+                        const Text(
+                          'Address: House-19,Lana-1,Block -A,\nSection -6,Mirpur,Dhaka-1216',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
                           ),
                         ),
                       ],

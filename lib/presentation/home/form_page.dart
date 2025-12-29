@@ -42,7 +42,7 @@ class InformationFormScreen extends StatelessWidget {
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Form(
-                key: provider.formKey,
+                // key: provider.formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -99,7 +99,7 @@ class InformationFormScreen extends StatelessWidget {
                     SizedBox(height: 5),
                     _buildTextField(
                       'দুর্ভিক্ষা কবলিত ব্যাক্তির বয়স',
-                      provider.phoneController,
+                      provider.ageController,
                     ),
                     SizedBox(height: 5),
 
@@ -149,6 +149,7 @@ class InformationFormScreen extends StatelessWidget {
                         index,
                       ) {
                         return CheckboxListTile(
+                           activeColor: Colors.red,
 controlAffinity: ListTileControlAffinity.leading,
                           title: Text(provider.firstList[index]),
                           value: provider.firstListCheck[index],
@@ -195,6 +196,7 @@ controlAffinity: ListTileControlAffinity.leading,
                         index,
                       ) {
                         return CheckboxListTile(
+                           activeColor: Colors.red,
                           controlAffinity: ListTileControlAffinity.leading,
                           title: Text(provider.secondList[index]),
                           value: provider.secondListCheck[index],
@@ -291,6 +293,7 @@ controlAffinity: ListTileControlAffinity.leading,
                         index,
                       ) {
                         return CheckboxListTile(
+                           activeColor: Colors.red,
                           controlAffinity: ListTileControlAffinity.leading,
                           title: Text(provider.thirdList[index]),
                           value: provider.thirdListCheck[index],
@@ -341,6 +344,7 @@ controlAffinity: ListTileControlAffinity.leading,
                         index,
                       ) {
                         return CheckboxListTile(
+                           activeColor: Colors.red,
                           controlAffinity: ListTileControlAffinity.leading,
                           title: Text(provider.fourthList[index]),
                           value: provider.fourthListCheck[index],
@@ -376,6 +380,7 @@ controlAffinity: ListTileControlAffinity.leading,
                         index,
                       ) {
                         return CheckboxListTile(
+                          activeColor: Colors.red,
                           controlAffinity: ListTileControlAffinity.leading,
                           title: Text(provider.fifthList[index]),
                           value: provider.fifthistCheck[index],
@@ -414,6 +419,7 @@ controlAffinity: ListTileControlAffinity.leading,
                         index,
                       ) {
                         return CheckboxListTile(
+                           activeColor: Colors.red,
                           controlAffinity: ListTileControlAffinity.leading,
                           title: Text(provider.sixthList[index]),
                           value: provider.sixthListCheck[index],
@@ -458,136 +464,136 @@ controlAffinity: ListTileControlAffinity.leading,
                     Row(
                       children: [
                         // Reset Button
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: () {},
-                            icon: Icon(Icons.refresh, size: 18),
-                            label: Text(
-                              'রিসেট করুন',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey[600],
-                              foregroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 12,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: ElevatedButton.icon(
+                        //     onPressed: () {
 
-                        SizedBox(width: 10),
+                        //     },
+                        //     icon: Icon(Icons.refresh, size: 18),
+                        //     label: Text(
+                        //       'রিসেট করুন',
+                        //       style: TextStyle(fontSize: 16),
+                        //     ),
+                        //     style: ElevatedButton.styleFrom(
+                        //       backgroundColor: Colors.grey[600],
+                        //       foregroundColor: Colors.white,
+                        //       padding: EdgeInsets.symmetric(
+                        //         horizontal: 20,
+                        //         vertical: 12,
+                        //       ),
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(8),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+
+                        // SizedBox(width: 10),
 
                         // Next Step Button
                         Expanded(
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              // final provider = context
-                              //     .read<InformationProvider>();
+                              final provider = context
+                                  .read<InformationProvider>();
 
-                              // // 1️⃣ Validate all TextFormFields
-                              // if (!(provider.formKey.currentState?.validate() ??
-                              //     false))
-                              //   return;
+                             
+                             
 
                               // // 2️⃣ Validate dropdowns
-                              // if (provider.gender == null ||
-                              //     provider.gender == "নির্বাচন করুন") {
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(
-                              //       content: Text("লিঙ্গ নির্বাচন করুন"),
-                              //     ),
-                              //   );
-                              //   return;
-                              // }
-                              // if (provider.maritalStatus == null ||
-                              //     provider.maritalStatus == "নির্বাচন করুন") {
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(
-                              //       content: Text(
-                              //         "বৈবাহিক অবস্থা নির্বাচন করুন",
-                              //       ),
-                              //     ),
-                              //   );
-                              //   return;
-                              // }
+                              if (provider.gender == null ||
+                                  provider.gender == "নির্বাচন করুন") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("লিঙ্গ নির্বাচন করুন"),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (provider.maritalStatus == null ||
+                                  provider.maritalStatus == "নির্বাচন করুন") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "বৈবাহিক অবস্থা নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
 
                               // // 3️⃣ Validate checkbox selections
-                              // if (provider.workplaceName == null ||
-                              //     provider.workplaceName!.isEmpty) {
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(
-                              //       content: Text(
-                              //         "কর্মসংস্থানের স্থান নির্বাচন করুন",
-                              //       ),
-                              //     ),
-                              //   );
-                              //   return;
-                              // }
-                              // if (provider.workShopeName == null ||
-                              //     provider.workShopeName!.isEmpty) {
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(
-                              //       content: Text(
-                              //         "ইনফরমাল ইন্ডাস্ট্রিস নির্বাচন করুন",
-                              //       ),
-                              //     ),
-                              //   );
-                              //   return;
-                              // }
-                              // if (provider.accidentSystem == null ||
-                              //     provider.accidentSystem!.isEmpty) {
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(
-                              //       content: Text(
-                              //         "দুর্ঘটনার ধরন নির্বাচন করুন",
-                              //       ),
-                              //     ),
-                              //   );
-                              //   return;
-                              // }
-                              // if (provider.accidentHelper == null ||
-                              //     provider.accidentHelper!.isEmpty) {
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(
-                              //       content: Text(
-                              //         "দুর্ঘটনার সহায়ক বস্তু নির্বাচন করুন",
-                              //       ),
-                              //     ),
-                              //   );
-                              //   return;
-                              // }
+                              if (provider.workplaceName == null ||
+                                  provider.workplaceName!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "কর্মসংস্থানের স্থান নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (provider.workShopeName == null ||
+                                  provider.workShopeName!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "ইনফরমাল ইন্ডাস্ট্রিস নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (provider.accidentSystem == null ||
+                                  provider.accidentSystem!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "দুর্ঘটনার ধরন নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (provider.accidentHelper == null ||
+                                  provider.accidentHelper!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "দুর্ঘটনার সহায়ক বস্তু নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
 
                               // // 4️⃣ Validate dates
-                              // if (provider.accidentDate == null ||
-                              //     provider.accidentDate!.isEmpty) {
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(
-                              //       content: Text(
-                              //         "দুর্ঘটনার তারিখ নির্বাচন করুন",
-                              //       ),
-                              //     ),
-                              //   );
-                              //   return;
-                              // }
+                              if (provider.accidentDate == null ||
+                                  provider.accidentDate!.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "দুর্ঘটনার তারিখ নির্বাচন করুন",
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
 
-                              // if (provider.accidentSystem == "মৃত্যু") {
-                              //   if (provider.ifDeath == null ||
-                              //       provider.ifDeath!.isEmpty) {
-                              //     ScaffoldMessenger.of(context).showSnackBar(
-                              //       const SnackBar(
-                              //         content: Text(
-                              //           "মৃত্যুর তারিখ নির্বাচন করুন",
-                              //         ),
-                              //       ),
-                              //     );
-                              //     return;
-                              //   }
-                              // }
+                             
+                                if (provider.informationHelperPhoneController.text .isEmpty ||
+                                     provider.informationGiveHelperController.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "সহয়তাকারীর তথ্য নির্বাচন করুন",
+                                      ),
+                                    ),
+                                  );
+                                  return;
+                                }
+                              
 
                               // ✅ All validation passed -> Navigate to next page
                               Navigator.push(
@@ -634,12 +640,12 @@ controlAffinity: ListTileControlAffinity.leading,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: isActive
-            ? const Color(0xFF1976D2)
+            ? Colors.red
             : isDone
             ? Colors.green
             : Colors.grey[300],
         border: Border.all(
-          color: isActive ? const Color(0xFF1976D2) : Colors.grey[400]!,
+          color: isActive ? Colors.red : Colors.grey[400]!,
           width: 2,
         ),
       ),
@@ -661,7 +667,7 @@ controlAffinity: ListTileControlAffinity.leading,
     return Container(
       height: 2,
       color: isActive
-          ? const Color(0xFF1976D2)
+          ? Colors.red
           : isDone
           ? Colors.green
           : Colors.grey[300],
@@ -768,6 +774,7 @@ controlAffinity: ListTileControlAffinity.leading,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(items.length, (index) {
         return CheckboxListTile(
+           activeColor: Colors.red,
           title: Text(items[index]),
           value: isSelected[index],
           onChanged: (_) {

@@ -265,13 +265,13 @@ Widget _buildStepIndicator(int step, bool isActive, bool isDone) {
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       color: isActive
-          ? const Color(0xFF1976D2)
+          ? Colors.red
           : isDone
           ? Colors.green
           : Colors.grey[300],
       border: Border.all(
         color: isActive
-            ? const Color(0xFF1976D2)
+            ? Colors.red
             : isDone
             ? Colors.green
             : Colors.grey[400]!,
@@ -296,7 +296,7 @@ Widget _buildStepLine(bool isActive, bool isDone) {
   return Container(
     height: 2,
     color: isActive
-        ? const Color(0xFF1976D2)
+        ? Colors.red
         : isDone
         ? Colors.green
         : Colors.grey[300],

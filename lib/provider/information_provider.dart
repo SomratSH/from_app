@@ -113,6 +113,7 @@ class InformationProvider extends ChangeNotifier {
     bloodGroup = null;
     selectedDistrict = null;
     notifyListeners();
+    
   }
 
   Future<bool> submitData(
@@ -240,7 +241,7 @@ class InformationProvider extends ChangeNotifier {
       fifthistCheck[i] = false;
     }
     afterAccidentFeactire = v;
-    fifthistCheck[index] = false;
+    fifthistCheck[index] = true;
     notifyListeners();
   }
 
